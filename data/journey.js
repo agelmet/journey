@@ -15,20 +15,20 @@ window.JOURNEY = {
 
   profile: {
     name: "Angelo",
-    handle: "@agelmet",
     role: {
       en: "Founder — Advon Media",
       el: "Founder — Advon Media"
     },
     tagline: {
-      en: "From a 18-year-old chasing affiliate commissions to running a web & marketing studio. Every win, every failure, every lesson — on one map.",
-      el: "Από 18άρης που κυνηγούσε προμήθειες affiliate, μέχρι το δικό μου web & marketing studio. Κάθε νίκη, κάθε αποτυχία, κάθε μάθημα — σε έναν χάρτη."
+      en: "From an 18-year-old chasing affiliate commissions to running a web studio with 200+ websites delivered. Every win, every failure, every lesson — on one map.",
+      el: "Από 18άρης που κυνηγούσε προμήθειες affiliate, μέχρι ένα web studio με 200+ websites παραδομένα. Κάθε νίκη, κάθε αποτυχία, κάθε μάθημα — σε έναν χάρτη."
     },
     startYear: 2022,
-    currentLabel: { en: "August 2026 — you are here", el: "Αύγουστος 2026 — εδώ είμαστε" },
+    /* Άλλαξε αυτή την ημερομηνία κάθε φορά που ενημερώνεις τον χάρτη */
+    lastUpdated: "15/08/2026",
+    currentLabel: { en: "15 Aug 2026 — you are here", el: "15 Αυγ 2026 — εδώ είμαστε" },
     links: [
-      { label: "Advon Media", url: "https://advonmedia.com" },
-      { label: "GitHub", url: "https://github.com/agelmet" }
+      { label: "advonmedia.com", url: "https://advonmedia.com" }
     ]
   },
 
@@ -45,6 +45,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 01 */
     {
       id: "affiliate-2022",
+      short: { en: "Affiliate marketing", el: "Affiliate marketing" },
       chapter: "affiliate",
       icon: "🚀",
       status: "lesson",
@@ -75,6 +76,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 02 */
     {
       id: "ds-puffer-cases",
+      short: { en: "Puffer cases", el: "Puffer θήκες" },
       chapter: "dropshipping",
       icon: "📱",
       status: "fail",
@@ -104,6 +106,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 03 */
     {
       id: "ds-mini-projector",
+      short: { en: "Mini projector", el: "Mini projector" },
       chapter: "dropshipping",
       icon: "📽️",
       status: "fail",
@@ -133,6 +136,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 04 */
     {
       id: "ds-blackhead-remover",
+      short: { en: "Blackhead remover", el: "Μαύρα στίγματα" },
       chapter: "dropshipping",
       icon: "✨",
       status: "lesson",
@@ -162,6 +166,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 05 */
     {
       id: "ds-mini-powerbank",
+      short: { en: "Mini power bank", el: "Mini power bank" },
       chapter: "dropshipping",
       icon: "🔋",
       status: "fail",
@@ -191,6 +196,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 06 */
     {
       id: "smma-gohighlevel",
+      short: { en: "High-ticket SMMA", el: "High-ticket SMMA" },
       chapter: "smma",
       icon: "🎯",
       status: "lesson",
@@ -220,6 +226,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 07 */
     {
       id: "glynos-rhodes",
+      short: { en: "Rhodes · the pivot", el: "Ρόδος · η στροφή" },
       chapter: "smma",
       icon: "🦷",
       status: "lesson",
@@ -249,6 +256,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 08 */
     {
       id: "trading-stocks",
+      short: { en: "Stocks · NVDA", el: "Μετοχές · NVDA" },
       chapter: "trading",
       icon: "📈",
       status: "lesson",
@@ -278,6 +286,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 09 */
     {
       id: "trading-cfd",
+      short: { en: "CFDs · the loss", el: "CFDs · η ζημιά" },
       chapter: "trading",
       icon: "📉",
       status: "fail",
@@ -307,6 +316,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 10 */
     {
       id: "back-to-web",
+      short: { en: "Back to websites", el: "Πίσω στα websites" },
       chapter: "web",
       icon: "💻",
       status: "win",
@@ -337,22 +347,28 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 11 */
     {
       id: "advon-media",
+      short: { en: "ADVON MEDIA", el: "ADVON MEDIA" },
       chapter: "web",
       icon: "🏆",
       status: "live",
       year: "2026",
-      date: { en: "August 2026 — now", el: "Αύγουστος 2026 — τώρα" },
+      date: { en: "TBD → present · updated 15/08/2026", el: "TBD → σήμερα · ενημέρωση 15/08/2026" },
       duration: { en: "Ongoing", el: "Σε εξέλιξη" },
       title: { en: "ADVON MEDIA", el: "ADVON MEDIA" },
       subtitle: { en: "Where the journey is right now", el: "Εδώ βρίσκεται το ταξίδι τώρα" },
       body: {
-        en: "Everything converged into one brand: Advon Media. Websites, branding, SEO and marketing for businesses that need to be taken seriously online — with more services being added as we grow. Four years, five business models, a lot of failures, and one company that carries all of it.",
-        el: "Όλα κατέληξαν σε ένα brand: Advon Media. Websites, branding, SEO και marketing για επιχειρήσεις που θέλουν να τις παίρνουν στα σοβαρά online — με νέες υπηρεσίες να προστίθενται συνεχώς. Τέσσερα χρόνια, πέντε επιχειρηματικά μοντέλα, πολλές αποτυχίες, και μία εταιρεία που τα κουβαλάει όλα."
+        en: "Everything converged into one brand: Advon Media — 200+ websites delivered, 110+ five-star Google reviews and a 5.0 rating. The model is built on removing the risk for the client: the website is built with no upfront payment, the first sample lands 7–14 days after we get the material, and revisions are unlimited until it's right. Hosting starts at €10.83/month. Around the websites sits a full toolkit: Google Business & Maps optimisation with NFC review stands, online appointment booking with automated reminders, a bilingual (EL/EN) AI website assistant, direct booking for tourism synced with Booking/Airbnb/Expedia, digital QR menus, cost calculators, custom small software, wedding & christening sites and social media management. Clients are Greek professionals and businesses — dentists, psychologists, ophthalmologists, tourism, hospitality.",
+        el: "Όλα κατέληξαν σε ένα brand: Advon Media — 200+ websites παραδομένα, 110+ πεντάστερες κριτικές Google και βαθμολογία 5.0. Το μοντέλο βασίζεται στο να φεύγει το ρίσκο από τον πελάτη: η κατασκευή γίνεται χωρίς προκαταβολή, το πρώτο δείγμα έρχεται 7–14 ημέρες μετά την παραλαβή του υλικού, και οι διορθώσεις είναι απεριόριστες μέχρι να είναι σωστό. Το hosting ξεκινά από 10,83€/μήνα. Γύρω από τα websites υπάρχει ολόκληρη εργαλειοθήκη: Google Business & Maps με NFC σταντ κριτικών, online ραντεβού με αυτόματες υπενθυμίσεις, δίγλωσσος (EL/EN) AI βοηθός ιστοσελίδας, direct booking για τουρισμό συγχρονισμένο με Booking/Airbnb/Expedia, ψηφιακά QR menu, υπολογιστές κόστους, custom μικρά software, sites γάμου & βάπτισης και διαχείριση social media. Οι πελάτες είναι Έλληνες επαγγελματίες και επιχειρήσεις — οδοντίατροι, ψυχολόγοι, οφθαλμίατροι, τουρισμός, εστίαση."
       },
       metrics: [
-        { label: { en: "Founded", el: "Ίδρυση" }, value: "TBD" },
-        { label: { en: "Services", el: "Υπηρεσίες" }, value: { en: "Web · Brand · SEO", el: "Web · Brand · SEO" } },
-        { label: { en: "Status", el: "Κατάσταση" }, value: { en: "Growing", el: "Μεγαλώνει" } }
+        { label: { en: "Websites built", el: "Websites" }, value: "200+" },
+        { label: { en: "5★ Google reviews", el: "5★ κριτικές Google" }, value: "110+" },
+        { label: { en: "Google rating", el: "Βαθμολογία Google" }, value: "5.0" },
+        { label: { en: "Upfront cost", el: "Προκαταβολή" }, value: { en: "€0", el: "0€" } },
+        { label: { en: "First sample", el: "Πρώτο δείγμα" }, value: { en: "7–14 days", el: "7–14 ημέρες" } },
+        { label: { en: "Hosting from", el: "Hosting από" }, value: { en: "€10.83/mo", el: "10,83€/μήνα" } },
+        { label: { en: "Revisions", el: "Διορθώσεις" }, value: { en: "Unlimited", el: "Απεριόριστες" } },
+        { label: { en: "Service lines", el: "Υπηρεσίες" }, value: "10" }
       ],
       lesson: {
         en: "Nothing was wasted. Every failed venture is a department in what I run today.",
@@ -367,6 +383,7 @@ window.JOURNEY = {
     /* ---------------------------------------------------------- 12 */
     {
       id: "next",
+      short: { en: "Next chapter", el: "Επόμενο κεφάλαιο" },
       chapter: "web",
       icon: "🌅",
       status: "next",

@@ -8,14 +8,19 @@ An interactive, bilingual (🇬🇷 Ελληνικά / 🇬🇧 English) roadmap
 
 ## ✨ What's in it
 
-- Animated **road/map** that draws itself as you scroll, with a glowing rider dot
-- **Progress bar + %** showing how far through the journey you are
+**On desktop it's one screen — no scrolling.** The whole journey is a single map that fits the
+viewport; you zoom *into* a stop to read it in detail.
+
+- **Fit-to-screen map** with a winding road that draws itself up to where the journey is today
+- **Click any stop → the map zooms to it** and a detail panel slides in with the full story
+- **Drag to pan · scroll to zoom · ← → to move between stops · Esc to zoom back out**
+- **▶ Tour** button that walks through every stage on its own
+- **Light theme by default**, dark theme one click away
 - **EL / EN toggle** — every single word switches instantly (remembers your choice)
-- **Dark / light** theme toggle
-- **Chapter filters** (Affiliate · Dropshipping · Trading · SMMA · Web & Agency)
+- Chapter legend doubles as a **filter** (dim everything except one chapter)
 - Per-stage **photo galleries** with a keyboard-friendly lightbox
-- **Win / Failure / Lesson / Live** status tags, metrics chips and a "lesson learned" quote per stage
-- Fully **responsive** — the map becomes a clean vertical timeline on mobile
+- **Win / Failure / Lesson / Live** tags, metric chips and a "lesson learned" quote per stage
+- On **mobile** the same content becomes a clean vertical timeline you scroll
 
 ---
 

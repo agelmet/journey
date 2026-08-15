@@ -1,7 +1,7 @@
 /* =========================================================
    JOURNEY — app.js
-   Renders the roadmap from data/journey.js, handles the
-   animated road, scroll progress, language + theme, lightbox.
+   Desktop : fit-to-screen zoomable map, click a stop to zoom in
+   Mobile  : vertical timeline
    ========================================================= */
 (() => {
   'use strict';
@@ -9,379 +9,425 @@
   const D = window.JOURNEY;
   const $  = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const el = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
-  /* ---------- i18n ---------- */
+  /* ---------------- i18n ---------------- */
   const UI = {
-    kicker:      { en: 'The Roadmap · 2022 → now', el: 'Ο Χάρτης · 2022 → σήμερα' },
-    heroTitle1:  { en: 'My journey in', el: 'Το ταξίδι μου στην' },
-    heroTitle2:  { en: 'entrepreneurship', el: 'επιχειρηματικότητα' },
-    statYears:   { en: 'Years in', el: 'Χρόνια μέσα' },
-    statVent:    { en: 'Ventures', el: 'Εγχειρήματα' },
-    statFails:   { en: 'Failures', el: 'Αποτυχίες' },
-    statNow:     { en: 'Companies now', el: 'Εταιρείες τώρα' },
-    scroll:      { en: 'scroll the map', el: 'κύλισε τον χάρτη' },
-    mapTitle:    { en: 'The Map', el: 'Ο Χάρτης' },
-    mapSub:      { en: 'Every stop, in order. Tap a photo to open it. Filter by chapter below.', el: 'Κάθε στάση, με τη σειρά. Πάτα μια φωτογραφία για να ανοίξει. Φιλτράρισε ανά κεφάλαιο.' },
-    all:         { en: 'All', el: 'Όλα' },
-    progress:    { en: 'Progress', el: 'Πρόοδος' },
-    lesson:      { en: 'Lesson', el: 'Μάθημα' },
-    addPhoto:    { en: '+ add photo here', el: '+ βάλε φωτό εδώ' },
-    outroTitle:  { en: 'The map is still being drawn.', el: 'Ο χάρτης γράφεται ακόμα.' },
-    outroBody:   { en: 'Four years, five business models, more failures than wins — and all of it feeding one company. New milestones get added here as they happen.', el: 'Τέσσερα χρόνια, πέντε επιχειρηματικά μοντέλα, περισσότερες αποτυχίες από νίκες — και όλα τροφοδοτούν μία εταιρεία. Νέα ορόσημα προστίθενται εδώ όσο συμβαίνουν.' },
+    kicker:     { en: 'The Roadmap · 2022 → now', el: 'Ο Χάρτης · 2022 → σήμερα' },
+    heroTitle1: { en: 'My journey in', el: 'Το ταξίδι μου στην' },
+    heroTitle2: { en: 'entrepreneurship', el: 'επιχειρηματικότητα' },
+    introTitle: { en: 'The Journey Map', el: 'Ο Χάρτης του Ταξιδιού' },
+    statYears:  { en: 'Years in', el: 'Χρόνια' },
+    statVent:   { en: 'Ventures', el: 'Εγχειρήματα' },
+    statFails:  { en: 'Failures', el: 'Αποτυχίες' },
+    statSites:  { en: 'Websites', el: 'Websites' },
+    hint:       { en: 'Click a stop to zoom in · drag to pan · scroll to zoom · ← → to move', el: 'Πάτα μια στάση για zoom · σύρε για μετακίνηση · scroll για zoom · ← → για πλοήγηση' },
+    chapters:   { en: 'Chapters', el: 'Κεφάλαια' },
+    updated:    { en: 'Updated', el: 'Ενημέρωση' },
+    progress:   { en: 'Journey', el: 'Πορεία' },
+    lesson:     { en: 'Lesson', el: 'Μάθημα' },
+    addPhoto:   { en: '+ add photo here', el: '+ βάλε φωτό εδώ' },
+    outroTitle: { en: 'The map is still being drawn.', el: 'Ο χάρτης γράφεται ακόμα.' },
+    outroBody:  { en: 'Four years, five business models, more failures than wins — and all of it feeding one company. New milestones get added here as they happen.', el: 'Τέσσερα χρόνια, πέντε επιχειρηματικά μοντέλα, περισσότερες αποτυχίες από νίκες — και όλα τροφοδοτούν μία εταιρεία. Νέα ορόσημα προστίθενται εδώ όσο συμβαίνουν.' },
     status: {
-      win:    { en: 'Win',      el: 'Νίκη' },
-      fail:   { en: 'Failure',  el: 'Αποτυχία' },
-      lesson: { en: 'Lesson',   el: 'Μάθημα' },
+      win:    { en: 'Win', el: 'Νίκη' },
+      fail:   { en: 'Failure', el: 'Αποτυχία' },
+      lesson: { en: 'Lesson', el: 'Μάθημα' },
       live:   { en: 'Live now', el: 'Τώρα' },
-      next:   { en: 'Next',     el: 'Επόμενο' }
+      next:   { en: 'Next', el: 'Επόμενο' }
     }
   };
 
   let LANG = 'el';
   try { LANG = localStorage.getItem('journey.lang') || 'el'; } catch (e) {}
-  const reg = []; // [{node, obj, attr}]
+  const reg = [];
   const pick = (o) => (o && typeof o === 'object' && !Array.isArray(o)) ? (o[LANG] ?? o.en ?? '') : (o ?? '');
-  function T(node, obj, attr) {
-    reg.push({ node, obj, attr: attr || 'text' });
-    if (attr) node.setAttribute(attr, pick(obj)); else node.textContent = pick(obj);
-    return node;
-  }
+  function T(node, obj, attr) { reg.push({ node, obj, attr: attr || 'text' }); if (attr) node.setAttribute(attr, pick(obj)); else node.textContent = pick(obj); return node; }
   function applyLang() {
-    reg.forEach(({ node, obj, attr }) => {
-      if (attr === 'text') node.textContent = pick(obj);
-      else node.setAttribute(attr, pick(obj));
-    });
+    reg.forEach(({ node, obj, attr }) => { if (attr === 'text') node.textContent = pick(obj); else node.setAttribute(attr, pick(obj)); });
     document.documentElement.lang = LANG;
     $('.lang').dataset.active = LANG;
     $$('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === LANG)));
     try { localStorage.setItem('journey.lang', LANG); } catch (e) {}
   }
 
-  /* ---------- helpers ---------- */
-  const el = (tag, cls, txt) => {
-    const n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (txt != null) n.textContent = txt;
-    return n;
-  };
   const chapterOf = (id) => D.chapters.find(c => c.id === id) || { color: '#7c5cff', label: { en: '', el: '' } };
+  const stages = D.stages;
+  const liveIdx = Math.max(0, stages.findIndex(s => s.status === 'live'));
 
-  /* ---------- HERO ---------- */
-  function renderHero() {
-    T($('#kicker-text'), UI.kicker);
-    T($('#hero-l1'), UI.heroTitle1);
-    T($('#hero-l2'), UI.heroTitle2);
-    T($('#hero-sub'), D.profile.tagline);
-    T($('#hero-now'), D.profile.currentLabel);
-    T($('#scroll-text'), UI.scroll);
+  /* ---------------- CARD (panel + mobile) ---------------- */
+  const cardCache = {};
+  function buildCard(s) {
+    if (cardCache[s.id]) return cardCache[s.id];
+    const ch = chapterOf(s.chapter);
+    const card = el('article', 'card');
+    card.style.setProperty('--acc', ch.color);
+
+    const top = el('div', 'card__top');
+    top.append(
+      T(el('span', 'tag tag--' + s.status), UI.status[s.status] || UI.status.lesson),
+      T(el('span', 'tag tag--acc'), ch.label),
+      T(el('span', 'tag'), s.date),
+      T(el('span', 'tag'), s.duration)
+    );
+    card.append(top, T(el('h3'), s.title));
+    if (s.subtitle) card.append(T(el('p', 'card__sub'), s.subtitle));
+    card.append(T(el('p', 'card__body'), s.body));
+
+    if (s.metrics && s.metrics.length) {
+      const m = el('div', 'metrics');
+      s.metrics.forEach(x => { const b = el('div', 'metric'); b.append(T(el('b'), x.value), T(el('span'), x.label)); m.append(b); });
+      card.append(m);
+    }
+
+    const g = el('div', 'gallery');
+    (s.images || []).forEach((img, i) => {
+      const th = el('button', 'thumb'); th.type = 'button';
+      const im = el('img'); im.src = img.src; im.loading = 'lazy'; T(im, img.caption, 'alt');
+      th.append(im);
+      th.addEventListener('click', () => openLightbox(s.images, i));
+      g.append(th);
+    });
+    const add = el('div', 'thumb thumb--add'); T(add, UI.addPhoto); g.append(add);
+    card.append(g);
+
+    if (s.lesson && (s.lesson.en || s.lesson.el)) {
+      const q = el('blockquote', 'lesson');
+      q.append(T(el('b'), UI.lesson), T(el('span'), s.lesson));
+      card.append(q);
+    }
+    cardCache[s.id] = card;
+    return card;
+  }
+
+  /* ---------------- MAP LAYOUT ---------------- */
+  /* SKIP = slots left empty at the top-left so the intro card never covers a stop */
+  const CW = 1600, CH = 900, COLS = 5, SKIP = 2;
+  function layout(n) {
+    const rows = Math.max(2, Math.ceil((n + SKIP) / COLS));
+    const padX = 190, padY = 180;
+    const stepX = (CW - padX * 2) / (COLS - 1);
+    const stepY = rows > 1 ? (CH - padY * 2) / (rows - 1) : 0;
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const slot = i + SKIP;
+      const r = Math.floor(slot / COLS);
+      let c = slot % COLS;
+      if (r % 2 === 1) c = COLS - 1 - c;
+      pts.push({ x: padX + c * stepX, y: padY + r * stepY + (i % 2 ? -24 : 24) });
+    }
+    return pts;
+  }
+  /* Catmull-Rom → cubic bezier: a natural winding road */
+  function smoothPath(p) {
+    if (p.length < 2) return '';
+    let d = `M ${p[0].x} ${p[0].y}`;
+    for (let i = 0; i < p.length - 1; i++) {
+      const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+      const t = 0.22;
+      d += ` C ${p1.x + (p2.x - p0.x) * t} ${p1.y + (p2.y - p0.y) * t}, ${p2.x - (p3.x - p1.x) * t} ${p2.y - (p3.y - p1.y) * t}, ${p2.x} ${p2.y}`;
+    }
+    return d;
+  }
+
+  const board = $('#board'), canvas = $('#canvas'), nodesBox = $('#nodes');
+  const pBase = $('#roadBase'), pFill = $('#roadFill'), pGlow = $('#roadGlow');
+  let PTS = [], nodeEls = [];
+
+  function renderMap() {
+    PTS = layout(stages.length);
+    const d = smoothPath(PTS);
+    [pBase, pFill, pGlow].forEach(p => p.setAttribute('d', d));
+
+    stages.forEach((s, i) => {
+      const ch = chapterOf(s.chapter);
+      const b = el('button', 'mnode');
+      b.style.setProperty('--acc', ch.color);
+      b.style.left = PTS[i].x + 'px';
+      b.style.top = PTS[i].y + 'px';
+      b.dataset.chapter = s.chapter;
+      if (s.status === 'live') b.classList.add('is-live');
+      if (i > liveIdx) b.classList.add('is-future');
+
+      const dot = el('span', 'mnode__dot', s.icon);
+      dot.append(el('span', 'mnode__num', String(i + 1)));
+      const lab = el('span', 'mnode__label');
+      lab.append(el('b', null, s.year), T(el('i'), s.short || s.title));
+      b.append(dot, lab);
+      b.addEventListener('click', (e) => { e.stopPropagation(); open(i); });
+      nodesBox.append(b);
+      nodeEls.push(b);
+    });
+
+    /* animate the road drawing up to the live stop */
+    requestAnimationFrame(() => {
+      const L = pFill.getTotalLength();
+      const upto = lengthAt(pFill, L, PTS[liveIdx]);
+      [pFill, pGlow].forEach(p => {
+        p.style.strokeDasharray = L;
+        p.style.strokeDashoffset = L;
+        p.getBoundingClientRect();
+        p.style.transition = 'stroke-dashoffset 2.4s cubic-bezier(.2,.8,.2,1)';
+        p.style.strokeDashoffset = L - upto;
+      });
+      const pct = Math.round(((liveIdx + 1) / stages.length) * 100);
+      setTimeout(() => { $('#hdrFill').style.width = pct + '%'; $('#hdrPct').textContent = pct + '%'; }, 120);
+    });
+  }
+  function lengthAt(path, L, target) {
+    let lo = 0, hi = L, best = L;
+    for (let i = 0; i < 26; i++) {
+      const mid = (lo + hi) / 2, pt = path.getPointAtLength(mid);
+      const dy = pt.y - target.y, dx = pt.x - target.x;
+      if (Math.hypot(dx, dy) < 2) { best = mid; break; }
+      if (pt.y < target.y - 1 || (Math.abs(pt.y - target.y) < 40 && dx * (target.x - pt.x) < 0)) lo = mid; else hi = mid;
+      best = mid;
+    }
+    return best;
+  }
+
+  /* ---------------- VIEW (zoom / pan) ---------------- */
+  let fit = 1, z = 1, tx = 0, ty = 0, openIdx = -1;
+  function boardSize() { const r = board.getBoundingClientRect(); return { w: r.width, h: r.height }; }
+  function computeFit() {
+    const { w, h } = boardSize();
+    fit = Math.min(w / CW, h / CH) * 0.94;
+  }
+  function homeXY() { const { w, h } = boardSize(); return { x: (w - CW * fit) / 2, y: (h - CH * fit) / 2 }; }
+  function apply(animate) {
+    canvas.classList.toggle('anim', !!animate);
+    canvas.style.transform = `translate(${tx}px, ${ty}px) scale(${fit * z})`;
+    $('#zVal').textContent = Math.round(z * 100) + '%';
+  }
+  function home(animate) { computeFit(); const h = homeXY(); tx = h.x; ty = h.y; z = 1; apply(animate); }
+  function zoomAt(nz, cx, cy, animate) {
+    nz = clamp(nz, 0.6, 4);
+    const s0 = fit * z, s1 = fit * nz;
+    tx = cx - (cx - tx) * (s1 / s0);
+    ty = cy - (cy - ty) * (s1 / s0);
+    z = nz; apply(animate);
+  }
+  function focus(i, animate = true) {
+    computeFit();
+    const { w, h } = boardSize();
+    const panelW = panel.classList.contains('on') ? panel.getBoundingClientRect().width : 0;
+    z = clamp(2.1, 0.6, 4);
+    const s = fit * z;
+    tx = (w - panelW) * 0.5 - PTS[i].x * s;
+    ty = h * 0.46 - PTS[i].y * s;
+    apply(animate);
+  }
+
+  /* drag to pan */
+  let drag = null, moved = 0;
+  board.addEventListener('pointerdown', e => {
+    if (e.target.closest('.ov') || e.target.closest('.mnode')) return;
+    drag = { x: e.clientX, y: e.clientY, tx, ty }; moved = 0;
+    board.classList.add('is-drag'); board.setPointerCapture(e.pointerId);
+  });
+  board.addEventListener('pointermove', e => {
+    if (!drag) return;
+    moved = Math.max(moved, Math.hypot(e.clientX - drag.x, e.clientY - drag.y));
+    tx = drag.tx + (e.clientX - drag.x); ty = drag.ty + (e.clientY - drag.y); apply(false);
+  });
+  /* click on empty map closes the detail panel */
+  board.addEventListener('click', e => {
+    if (moved > 5 || e.target.closest('.mnode') || e.target.closest('.ov')) return;
+    if (openIdx >= 0) { close(); home(true); }
+  });
+  const endDrag = () => { drag = null; board.classList.remove('is-drag'); };
+  board.addEventListener('pointerup', endDrag);
+  board.addEventListener('pointercancel', endDrag);
+  board.addEventListener('wheel', e => {
+    e.preventDefault();
+    const r = board.getBoundingClientRect();
+    zoomAt(z * (e.deltaY > 0 ? 0.9 : 1.11), e.clientX - r.left, e.clientY - r.top, false);
+  }, { passive: false });
+
+  $('#zIn').addEventListener('click', () => { const { w, h } = boardSize(); zoomAt(z * 1.3, w / 2, h / 2, true); });
+  $('#zOut').addEventListener('click', () => { const { w, h } = boardSize(); zoomAt(z / 1.3, w / 2, h / 2, true); });
+  $('#zReset').addEventListener('click', () => { close(); home(true); });
+
+  /* ---------------- PANEL ---------------- */
+  const panel = $('#panel'), panelBody = $('#panelBody'), scrim = $('#scrim');
+  function open(i) {
+    openIdx = i;
+    panelBody.replaceChildren(buildCard(stages[i]));
+    panelBody.scrollTop = 0;
+    panel.classList.add('on');
+    board.classList.add('focused');
+    $('#pCount').textContent = (i + 1) + ' / ' + stages.length;
+    nodeEls.forEach((n, k) => n.classList.toggle('is-open', k === i));
+    requestAnimationFrame(() => focus(i, true));
+  }
+  function close() {
+    openIdx = -1; panel.classList.remove('on'); scrim.classList.remove('on'); board.classList.remove('focused');
+    nodeEls.forEach(n => n.classList.remove('is-open'));
+    nodeEls.forEach(n => n.classList.remove('is-open'));
+    stopTour();
+  }
+  const step = d => { if (openIdx < 0) return open(0); open((openIdx + d + stages.length) % stages.length); };
+  $('#pClose').addEventListener('click', () => { close(); home(true); });
+  $('#pPrev').addEventListener('click', () => step(-1));
+  $('#pNext').addEventListener('click', () => step(1));
+  scrim.addEventListener('click', () => { close(); home(true); });
+  document.addEventListener('keydown', e => {
+    if ($('#lightbox').classList.contains('is-open')) return;
+    if (e.key === 'Escape') { close(); home(true); }
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+
+  /* guided tour */
+  let tourT = null;
+  function stopTour() { if (tourT) { clearInterval(tourT); tourT = null; $('#tour').classList.remove('is-on'); $('#tour').textContent = '▶'; } }
+  $('#tour').addEventListener('click', () => {
+    if (tourT) return stopTour();
+    $('#tour').classList.add('is-on'); $('#tour').textContent = '❚❚';
+    open(openIdx < 0 ? 0 : openIdx);
+    tourT = setInterval(() => {
+      if (openIdx >= stages.length - 1) { stopTour(); return; }
+      openIdx += 1; open(openIdx);
+    }, 5200);
+  });
+
+  /* ---------------- OVERLAYS ---------------- */
+  function renderOverlays() {
     T($('#brand-role'), D.profile.role);
-    $('#hero-start').textContent = D.profile.startYear;
+    T($('#introTitle'), UI.introTitle);
+    T($('#introSub'), D.profile.tagline);
+    T($('#hint'), UI.hint);
+    T($('#hdrLabel'), UI.progress);
 
-    const real = D.stages.filter(s => s.status !== 'next');
-    const stats = [
+    const real = stages.filter(s => s.status !== 'next');
+    const advon = stages.find(s => s.id === 'advon-media');
+    const sitesM = advon && advon.metrics && advon.metrics[0] ? advon.metrics[0].value : '200+';
+    [
       { n: new Date().getFullYear() - D.profile.startYear, l: UI.statYears },
       { n: real.length, l: UI.statVent },
       { n: real.filter(s => s.status === 'fail').length, l: UI.statFails },
-      { n: 1, l: UI.statNow }
-    ];
-    const wrap = $('#stats');
-    stats.forEach((s, i) => {
-      const box = el('div', 'stat glass rv');
-      box.style.transitionDelay = (i * 90) + 'ms';
-      const num = el('div', 'stat__n grad-text', '0');
-      num.dataset.target = s.n;
-      box.append(num, T(el('div', 'stat__l'), s.l));
-      wrap.append(box);
+      { n: sitesM, l: UI.statSites }
+    ].forEach(s => {
+      const b = el('div', 'istat');
+      b.append(el('b', null, String(s.n)), T(el('span'), s.l));
+      $('#introStats').append(b);
     });
-  }
 
-  /* ---------- FILTERS ---------- */
-  function renderFilters() {
-    const box = $('#filters');
-    const mk = (id, label, color) => {
-      const b = el('button', 'chip' + (id === 'all' ? ' is-on' : ''));
-      b.dataset.f = id;
-      const dot = el('i');
-      if (color) dot.style.background = color;
-      b.append(dot, T(el('span'), label));
+    const lg = $('#legend');
+    lg.append(T(el('div', 'legend__t'), UI.chapters));
+    D.chapters.forEach(c => {
+      const b = el('button', 'lg');
+      b.style.setProperty('--c', c.color);
+      b.append(el('i'), T(el('span'), c.label));
       b.addEventListener('click', () => {
-        $$('.chip').forEach(c => c.classList.toggle('is-on', c === b));
-        $$('.stage').forEach(s => s.classList.toggle('is-hidden', id !== 'all' && s.dataset.chapter !== id));
-        requestAnimationFrame(() => { buildPath(); onScroll(); });
+        b.classList.toggle('off');
+        const offs = $$('.lg.off', lg).map(x => x.dataset.id);
+        nodeEls.forEach(n => n.classList.toggle('dimmed', offs.includes(n.dataset.chapter)));
       });
-      box.append(b);
-    };
-    mk('all', UI.all, 'linear-gradient(90deg,#7c5cff,#2bd98b)');
-    D.chapters.forEach(c => mk(c.id, c.label, c.color));
+      b.dataset.id = c.id;
+      lg.append(b);
+    });
+
+    const u = $('#updated');
+    u.append(T(el('span'), UI.updated), el('b', null, D.profile.lastUpdated));
+    const link = D.profile.links[0];
+    if (link) { const a = el('a', null, link.label); a.href = link.url; a.target = '_blank'; a.rel = 'noopener'; u.append(a); }
   }
 
-  /* ---------- STAGES ---------- */
-  function renderStages() {
-    const road = $('#road');
-    T($('#map-title'), UI.mapTitle);
-    T($('#map-sub'), UI.mapSub);
+  /* ---------------- MOBILE ---------------- */
+  function renderMobile() {
+    T($('#m-kicker'), UI.kicker);
+    T($('#m-l1'), UI.heroTitle1);
+    T($('#m-l2'), UI.heroTitle2);
+    T($('#m-sub'), D.profile.tagline);
+    T($('#m-now'), D.profile.currentLabel);
+    $('#m-start').textContent = D.profile.startYear;
+    T($('#m-outroTitle'), UI.outroTitle);
+    T($('#m-outroBody'), UI.outroBody);
+    $('#m-footer').textContent = '© ' + new Date().getFullYear() + ' Angelo · Advon Media · ' + pick(UI.updated) + ' ' + D.profile.lastUpdated;
 
-    D.stages.forEach((s) => {
+    const real = stages.filter(s => s.status !== 'next');
+    const advon = stages.find(s => s.id === 'advon-media');
+    [
+      { n: new Date().getFullYear() - D.profile.startYear, l: UI.statYears },
+      { n: real.length, l: UI.statVent },
+      { n: real.filter(s => s.status === 'fail').length, l: UI.statFails },
+      { n: (advon && advon.metrics[0] && advon.metrics[0].value) || '200+', l: UI.statSites }
+    ].forEach(s => {
+      const b = el('div', 'stat glass');
+      b.append(el('div', 'stat__n grad-text', String(s.n)), T(el('div', 'stat__l'), s.l));
+      $('#m-stats').append(b);
+    });
+
+    const tl = $('#timeline');
+    stages.forEach(s => {
       const ch = chapterOf(s.chapter);
-      const stage = el('div', 'stage');
-      stage.dataset.chapter = s.chapter;
-      stage.id = 'stage-' + s.id;
-      stage.style.setProperty('--acc', ch.color);
-      if (s.status === 'live') stage.classList.add('is-live');
-
-      /* node */
-      const nodeWrap = el('div', 'stage__node');
-      const node = el('div', 'node', s.icon);
-      node.setAttribute('role', 'button');
-      node.setAttribute('tabindex', '0');
-      node.append(el('span', 'node__year', s.year));
-      node.addEventListener('click', () => stage.scrollIntoView({ behavior: 'smooth', block: 'center' }));
-      nodeWrap.append(node);
-
-      /* card */
-      const cardWrap = el('div', 'stage__card');
-      const card = el('article', 'card glass');
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      });
-
-      const top = el('div', 'card__top');
-      top.append(
-        T(el('span', 'tag tag--' + s.status), UI.status[s.status] || UI.status.lesson),
-        T(el('span', 'tag tag--acc'), ch.label),
-        T(el('span', 'tag'), s.date),
-        T(el('span', 'tag'), s.duration)
-      );
-      card.append(top);
-      card.append(T(el('h3'), s.title));
-      if (s.subtitle) card.append(T(el('p', 'card__sub'), s.subtitle));
-      card.append(T(el('p', 'card__body'), s.body));
-
-      if (s.metrics && s.metrics.length) {
-        const m = el('div', 'metrics');
-        s.metrics.forEach(x => {
-          const box = el('div', 'metric');
-          box.append(T(el('b'), x.value), T(el('span'), x.label));
-          m.append(box);
-        });
-        card.append(m);
-      }
-
-      const g = el('div', 'gallery');
-      (s.images || []).forEach((img, i) => {
-        const th = el('button', 'thumb');
-        th.type = 'button';
-        const im = el('img');
-        im.src = img.src;
-        im.loading = 'lazy';
-        T(im, img.caption, 'alt');
-        th.append(im);
-        th.addEventListener('click', () => openLightbox(s.images, i));
-        g.append(th);
-      });
-      const add = el('div', 'thumb thumb--add');
-      T(add, UI.addPhoto);
-      g.append(add);
-      card.append(g);
-
-      if (s.lesson && (s.lesson.en || s.lesson.el)) {
-        const q = el('blockquote', 'lesson');
-        const inner = el('div');
-        inner.append(T(el('b'), UI.lesson), T(el('span'), s.lesson));
-        q.append(inner);
-        card.append(q);
-      }
-
-      cardWrap.append(card);
-      stage.append(cardWrap, nodeWrap);
-      road.append(stage);
+      const row = el('div', 'tl__stage');
+      row.style.setProperty('--acc', ch.color);
+      const rail = el('div', 'tl__rail');
+      rail.append(el('div', 'tl__dot', s.icon), el('div', 'tl__year', s.year));
+      const holder = el('div');
+      holder.append(buildCard(s));
+      row.append(rail, holder);
+      tl.append(row);
     });
-  }
 
-  /* ---------- OUTRO ---------- */
-  function renderOutro() {
-    T($('#outro-title'), UI.outroTitle);
-    T($('#outro-body'), UI.outroBody);
-    const box = $('#outro-links');
-    D.profile.links.forEach((l, i) => {
-      const a = el('a', 'btn' + (i ? ' btn--ghost' : ''), l.label);
-      a.href = l.url;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      box.append(a);
-    });
-  }
+    const links = $('#m-links');
+    D.profile.links.forEach(l => { const a = el('a', 'btn', l.label); a.href = l.url; a.target = '_blank'; a.rel = 'noopener'; links.append(a); });
 
-  /* ---------- ROAD PATH ---------- */
-  const svg = $('#roadSvg');
-  const pBase = $('#roadBase'), pFill = $('#roadFill'), pGlow = $('#roadGlow'), rider = $('#rider');
-  let pathLen = 0;
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+    $$('.tl__stage').forEach(x => io.observe(x));
 
-  function buildPath() {
-    const road = $('#road');
-    const stages = $$('.stage:not(.is-hidden)', road);
-    if (!stages.length) return;
-    const rb = road.getBoundingClientRect();
-    svg.setAttribute('viewBox', `0 0 ${rb.width} ${rb.height}`);
-    svg.setAttribute('width', rb.width);
-    svg.setAttribute('height', rb.height);
-
-    const pts = stages.map(s => {
-      const n = $('.node', s).getBoundingClientRect();
-      return { x: n.left - rb.left + n.width / 2, y: n.top - rb.top + n.height / 2 };
-    });
-    pts.unshift({ x: pts[0].x, y: Math.max(0, pts[0].y - 70) });
-    pts.push({ x: pts[pts.length - 1].x, y: Math.min(rb.height, pts[pts.length - 1].y + 70) });
-
-    let d = `M ${pts[0].x} ${pts[0].y}`;
-    for (let i = 1; i < pts.length; i++) {
-      const a = pts[i - 1], b = pts[i];
-      const k = Math.abs(b.y - a.y) * 0.45;
-      d += ` C ${a.x} ${a.y + k}, ${b.x} ${b.y - k}, ${b.x} ${b.y}`;
-    }
-    [pBase, pFill, pGlow].forEach(p => p.setAttribute('d', d));
-    pathLen = pFill.getTotalLength();
-    pFill.style.strokeDasharray = pathLen;
-    pGlow.style.strokeDasharray = pathLen;
-  }
-
-  /* ---------- SCROLL ---------- */
-  let ticking = false;
-  function onScroll() {
-    /* page progress bar */
-    const docH = document.documentElement.scrollHeight - window.innerHeight;
-    const pageP = docH > 0 ? Math.min(1, Math.max(0, window.scrollY / docH)) : 0;
-    $('#topFill').style.width = (pageP * 100) + '%';
-
-    const road = $('#road');
-    if (!road || !pathLen) return;
-    const rb = road.getBoundingClientRect();
-    const anchor = window.innerHeight * 0.55;
-    let p = (anchor - rb.top) / rb.height;
-    p = Math.min(1, Math.max(0, p));
-
-    pFill.style.strokeDashoffset = pathLen * (1 - p);
-    pGlow.style.strokeDashoffset = pathLen * (1 - p);
-
-    const pt = pFill.getPointAtLength(pathLen * p);
-    rider.setAttribute('transform', `translate(${pt.x},${pt.y})`);
-    rider.style.opacity = p > 0.001 && p < 0.999 ? 1 : 0.25;
-
-    const pct = Math.round(p * 100);
-    $('#hdrFill').style.width = pct + '%';
-    $('#hdrPct').textContent = pct + '%';
-
-    $$('.stage:not(.is-hidden)').forEach(s => {
-      const n = $('.node', s).getBoundingClientRect();
-      const y = n.top - rb.top + n.height / 2;
-      s.classList.toggle('is-reached', pt.y >= y - 6);
-    });
-    ticking = false;
-  }
-  const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } };
-
-  /* ---------- REVEAL + COUNTERS ---------- */
-  function observe() {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('in');
-        if (e.target.classList.contains('stat')) {
-          const n = $('.stat__n', e.target);
-          const target = +n.dataset.target;
-          let i = 0;
-          const step = () => {
-            i += Math.max(1, Math.ceil(target / 22));
-            if (i >= target) { n.textContent = target; return; }
-            n.textContent = i;
-            requestAnimationFrame(step);
-          };
-          step();
-        }
-        io.unobserve(e.target);
-      });
-    }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
-    $$('.stage, .rv').forEach(x => io.observe(x));
-  }
-
-  /* ---------- LIGHTBOX ---------- */
-  let lbList = [], lbIdx = 0;
-  const lb = $('#lightbox');
-  function openLightbox(list, i) {
-    lbList = list; lbIdx = i;
-    paintLightbox();
-    lb.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-  }
-  function paintLightbox() {
-    const it = lbList[lbIdx];
-    $('#lbImg').src = it.src;
-    $('#lbCap').textContent = pick(it.caption);
-  }
-  function closeLightbox() {
-    lb.classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
-  function move(d) {
-    if (!lbList.length) return;
-    lbIdx = (lbIdx + d + lbList.length) % lbList.length;
-    paintLightbox();
-  }
-  $('#lbClose').addEventListener('click', closeLightbox);
-  $('#lbPrev').addEventListener('click', e => { e.stopPropagation(); move(-1); });
-  $('#lbNext').addEventListener('click', e => { e.stopPropagation(); move(1); });
-  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('is-open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') move(1);
-    if (e.key === 'ArrowLeft') move(-1);
-  });
-
-  /* ---------- CONTROLS ---------- */
-  $$('.lang button').forEach(b => b.addEventListener('click', () => {
-    LANG = b.dataset.lang;
-    applyLang();
-    if (lb.classList.contains('is-open')) paintLightbox();
-  }));
-
-  const themeBtn = $('#themeBtn');
-  let theme = 'dark';
-  try { theme = localStorage.getItem('journey.theme') || 'dark'; } catch (e) {}
-  function applyTheme() {
-    document.documentElement.dataset.theme = theme;
-    themeBtn.textContent = theme === 'dark' ? '☾' : '☀';
-    try { localStorage.setItem('journey.theme', theme); } catch (e) {}
-  }
-  themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; applyTheme(); });
-
-  /* cursor glow (desktop only) */
-  if (window.matchMedia('(pointer:fine)').matches) {
-    const glow = $('#cursorGlow');
-    window.addEventListener('pointermove', e => {
-      glow.style.opacity = 1;
-      glow.style.left = e.clientX + 'px';
-      glow.style.top = e.clientY + 'px';
+    const bar = $('#topFill');
+    window.addEventListener('scroll', () => {
+      const dh = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (dh > 0 ? (window.scrollY / dh) * 100 : 0) + '%';
     }, { passive: true });
   }
 
-  /* ---------- BOOT ---------- */
-  renderHero();
-  renderFilters();
-  renderStages();
-  renderOutro();
+  /* ---------------- LIGHTBOX ---------------- */
+  let lbList = [], lbIdx = 0;
+  const lb = $('#lightbox');
+  function openLightbox(list, i) { lbList = list; lbIdx = i; paintLb(); lb.classList.add('is-open'); }
+  function paintLb() { const it = lbList[lbIdx]; $('#lbImg').src = it.src; $('#lbCap').textContent = pick(it.caption); }
+  function closeLb() { lb.classList.remove('is-open'); }
+  function moveLb(d) { if (!lbList.length) return; lbIdx = (lbIdx + d + lbList.length) % lbList.length; paintLb(); }
+  $('#lbClose').addEventListener('click', closeLb);
+  $('#lbPrev').addEventListener('click', e => { e.stopPropagation(); moveLb(-1); });
+  $('#lbNext').addEventListener('click', e => { e.stopPropagation(); moveLb(1); });
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowRight') moveLb(1);
+    if (e.key === 'ArrowLeft') moveLb(-1);
+  });
+
+  /* ---------------- CONTROLS ---------------- */
+  $$('.lang button').forEach(b => b.addEventListener('click', () => {
+    LANG = b.dataset.lang; applyLang();
+    if (lb.classList.contains('is-open')) paintLb();
+  }));
+  const themeBtn = $('#themeBtn');
+  let theme = 'light';
+  try { theme = localStorage.getItem('journey.theme') || 'light'; } catch (e) {}
+  function applyTheme() {
+    document.documentElement.dataset.theme = theme;
+    themeBtn.textContent = theme === 'light' ? '☀' : '☾';
+    try { localStorage.setItem('journey.theme', theme); } catch (e) {}
+  }
+  themeBtn.addEventListener('click', () => { theme = theme === 'light' ? 'dark' : 'light'; applyTheme(); });
+
+  /* ---------------- BOOT ---------------- */
+  renderMap();
+  renderOverlays();
+  renderMobile();
   applyLang();
   applyTheme();
-  observe();
-
-  const relayout = () => { buildPath(); onScroll(); };
-  window.addEventListener('scroll', queue, { passive: true });
-  window.addEventListener('resize', () => { clearTimeout(window.__rt); window.__rt = setTimeout(relayout, 120); });
-  window.addEventListener('load', relayout);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
-  setTimeout(relayout, 60);
-  setTimeout(relayout, 600);
-  relayout();
+  home(false);
+  window.addEventListener('resize', () => {
+    clearTimeout(window.__rz);
+    window.__rz = setTimeout(() => { if (openIdx >= 0) focus(openIdx, true); else home(true); }, 140);
+  });
 })();

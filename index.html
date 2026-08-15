@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="el" data-theme="dark">
+<html lang="el" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Angelo — Journey / Το Ταξίδι</title>
 <meta name="description" content="From affiliate marketing at 18 to Advon Media — an interactive bilingual roadmap of every venture, win and failure. / Από το affiliate marketing στα 18 μέχρι την Advon Media.">
-<meta name="theme-color" content="#05060d">
+<meta name="theme-color" content="#f2f4fc">
 <meta property="og:title" content="Angelo — Journey in Entrepreneurship">
-<meta property="og:description" content="2022 → 2026. Affiliate, dropshipping, trading, SMMA, and Advon Media. An interactive roadmap.">
+<meta property="og:description" content="2022 → 2026. Affiliate, dropshipping, trading, SMMA, and Advon Media. An interactive map.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,116 +17,109 @@
 </head>
 <body>
 
-<!-- background -->
 <div class="bg" aria-hidden="true">
   <div class="bg__grid"></div>
   <div class="blob blob--1"></div>
   <div class="blob blob--2"></div>
   <div class="blob blob--3"></div>
-  <div class="bg__noise"></div>
 </div>
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-<!-- scroll progress -->
-<div class="topbar" aria-hidden="true"><div class="topbar__fill" id="topFill"></div></div>
-
-<!-- header -->
 <header class="header">
-  <div class="header__inner glass">
-    <div class="brand">
-      <span class="brand__dot"></span>
-      ANGELO <span id="brand-role" style="color:var(--dim);font-weight:600;font-size:12.5px"></span>
-    </div>
-    <div class="header__spacer"></div>
-    <div class="hdr-progress">
-      <div class="hdr-progress__track"><div class="hdr-progress__fill" id="hdrFill"></div></div>
-      <span id="hdrPct">0%</span>
-    </div>
-    <button class="pill-btn" id="themeBtn" title="Theme" aria-label="Toggle theme">☾</button>
-    <div class="lang" data-active="el">
-      <span class="lang__thumb"></span>
-      <button data-lang="el" aria-pressed="true">ΕΛ</button>
-      <button data-lang="en" aria-pressed="false">EN</button>
-    </div>
+  <div class="brand"><span class="brand__dot"></span>ANGELO <span class="brand__role" id="brand-role"></span></div>
+  <div class="header__spacer"></div>
+  <div class="hdr-progress">
+    <span id="hdrLabel"></span>
+    <div class="hdr-progress__track"><div class="hdr-progress__fill" id="hdrFill"></div></div>
+    <span id="hdrPct">0%</span>
+  </div>
+  <button class="pill-btn" id="themeBtn" aria-label="Theme">☀</button>
+  <div class="lang" data-active="el">
+    <span class="lang__thumb"></span>
+    <button data-lang="el" aria-pressed="true">ΕΛ</button>
+    <button data-lang="en" aria-pressed="false">EN</button>
   </div>
 </header>
 
-<!-- hero -->
-<section class="hero">
-  <div class="wrap">
-    <div class="hero__kicker glass"><span id="kicker-text"></span></div>
-    <h1>
-      <span id="hero-l1" class="d-block"></span>
-      <span id="hero-l2" class="grad-text"></span>
-    </h1>
-    <p class="hero__sub" id="hero-sub"></p>
-    <div class="hero__years">
-      <b id="hero-start">2022</b><span>———</span><b id="hero-now"></b>
-    </div>
-    <div class="stats" id="stats"></div>
-    <div class="scrollcue">
-      <span id="scroll-text"></span>
-      <span class="scrollcue__line"></span>
-    </div>
+<div class="topbar" aria-hidden="true"><div class="topbar__fill" id="topFill"></div></div>
+
+<!-- ============ DESKTOP: one-screen zoomable map ============ -->
+<section class="board" id="board">
+  <div class="board__canvas" id="canvas">
+    <svg class="board__svg" viewBox="0 0 1600 900" aria-hidden="true">
+      <defs>
+        <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"   stop-color="#7c5cff"/>
+          <stop offset="32%"  stop-color="#0aa8d6"/>
+          <stop offset="58%"  stop-color="#f08a1e"/>
+          <stop offset="78%"  stop-color="#e8407a"/>
+          <stop offset="100%" stop-color="#12a86a"/>
+        </linearGradient>
+      </defs>
+      <path class="road-base" id="roadBase"></path>
+      <path class="road-glow" id="roadGlow"></path>
+      <path class="road-fill" id="roadFill"></path>
+    </svg>
+    <div id="nodes"></div>
+  </div>
+
+  <div class="ov intro glass" id="intro">
+    <h1 class="grad-text" id="introTitle"></h1>
+    <p id="introSub"></p>
+    <div class="intro__stats" id="introStats"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <div class="ov hint glass" id="hint"></div>
+  <div class="ov updated glass" id="updated"></div>
+
+  <div class="ov zoomctl glass">
+    <button id="zOut" aria-label="Zoom out">−</button>
+    <span id="zVal">100%</span>
+    <button id="zIn" aria-label="Zoom in">+</button>
+    <button id="zReset" aria-label="Reset view">⤢</button>
+    <button id="tour" aria-label="Tour">▶</button>
   </div>
 </section>
 
-<!-- map -->
-<main>
-  <section class="wrap">
-    <div class="section-head rv">
-      <h2 id="map-title" class="grad-text"></h2>
-      <p id="map-sub"></p>
+<!-- ============ DETAIL PANEL ============ -->
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="false">
+  <div class="panel__bar">
+    <button class="pill-btn" id="pPrev">‹</button>
+    <button class="pill-btn" id="pNext">›</button>
+    <span class="panel__count" id="pCount"></span>
+    <button class="pill-btn" id="pClose">✕</button>
+  </div>
+  <div class="panel__body" id="panelBody"></div>
+</aside>
+
+<!-- ============ MOBILE ============ -->
+<div class="mobile" id="mobile">
+  <div class="wrap hero">
+    <div class="hero__kicker glass" id="m-kicker"></div>
+    <h1><span id="m-l1"></span> <span class="grad-text" id="m-l2"></span></h1>
+    <p id="m-sub"></p>
+    <div class="hero__years"><b id="m-start">2022</b><span>———</span><b id="m-now"></b></div>
+    <div class="stats" id="m-stats"></div>
+  </div>
+  <div class="wrap tl" id="timeline"></div>
+  <div class="wrap outro">
+    <div class="outro__box glass">
+      <h2 class="grad-text" id="m-outroTitle"></h2>
+      <p id="m-outroBody"></p>
+      <div id="m-links"></div>
     </div>
-    <div class="filters rv" id="filters"></div>
+  </div>
+  <div class="footer"><p id="m-footer"></p></div>
+</div>
 
-    <div class="road" id="road">
-      <svg class="road__svg" id="roadSvg" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#7c5cff"/>
-            <stop offset="35%"  stop-color="#00d4ff"/>
-            <stop offset="70%"  stop-color="#ff9f45"/>
-            <stop offset="100%" stop-color="#2bd98b"/>
-          </linearGradient>
-        </defs>
-        <path class="road__base" id="roadBase"></path>
-        <path class="road__glow" id="roadGlow"></path>
-        <path class="road__fill" id="roadFill"></path>
-        <g class="road__rider" id="rider">
-          <circle r="9" fill="#fff" opacity=".18"></circle>
-          <circle r="5" fill="#fff"></circle>
-        </g>
-      </svg>
-    </div>
-  </section>
-
-  <!-- outro -->
-  <section class="wrap outro">
-    <div class="outro__box glass rv">
-      <h2 id="outro-title" class="grad-text"></h2>
-      <p id="outro-body"></p>
-      <div class="btns" id="outro-links"></div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <p>© <span id="yr"></span> Angelo · Advon Media</p>
-</footer>
-
-<!-- lightbox -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <button class="lightbox__x" id="lbClose" aria-label="Close">✕</button>
   <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" aria-label="Previous">‹</button>
   <button class="lightbox__nav lightbox__nav--next" id="lbNext" aria-label="Next">›</button>
-  <div>
-    <img id="lbImg" alt="">
-    <p class="lightbox__cap" id="lbCap"></p>
-  </div>
+  <div><img id="lbImg" alt=""><p class="lightbox__cap" id="lbCap"></p></div>
 </div>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 <script src="data/journey.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
