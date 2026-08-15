@@ -2,14 +2,14 @@
 <html lang="el" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Angelo — Journey / Το Ταξίδι</title>
-<meta name="description" content="From affiliate marketing at 18 to Advon Media — an interactive bilingual roadmap of every venture, win and failure. / Από το affiliate marketing στα 18 μέχρι την Advon Media.">
+<meta name="description" content="2020 → 2026. A-Levels, affiliate, six stores, day trading, and Advon Media — the full interactive map, in Greek and English.">
 <meta name="theme-color" content="#f2f4fc">
-<meta property="og:title" content="Angelo — Journey in Entrepreneurship">
-<meta property="og:description" content="2022 → 2026. Affiliate, dropshipping, trading, SMMA, and Advon Media. An interactive map.">
+<meta property="og:title" content="Angelo — The Journey Map">
+<meta property="og:description" content="From A-Levels and mindset books to 200+ websites. Every venture, win and failure on one zoomable map.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2312a86a' stroke-width='2' stroke-linecap='round'><path d='M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z'/><circle cx='12' cy='10' r='2.5'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -26,13 +26,15 @@
 
 <header class="header">
   <div class="brand"><span class="brand__dot"></span>ANGELO <span class="brand__role" id="brand-role"></span></div>
+  <div class="hstats" id="hdrStats"></div>
   <div class="header__spacer"></div>
   <div class="hdr-progress">
     <span id="hdrLabel"></span>
     <div class="hdr-progress__track"><div class="hdr-progress__fill" id="hdrFill"></div></div>
     <span id="hdrPct">0%</span>
   </div>
-  <button class="pill-btn" id="themeBtn" aria-label="Theme">☀</button>
+  <button class="pill-btn" id="aboutBtn" aria-label="About">i</button>
+  <button class="pill-btn" id="themeBtn" aria-label="Theme"></button>
   <div class="lang" data-active="el">
     <span class="lang__thumb"></span>
     <button data-lang="el" aria-pressed="true">ΕΛ</button>
@@ -40,18 +42,16 @@
   </div>
 </header>
 
-<div class="topbar" aria-hidden="true"><div class="topbar__fill" id="topFill"></div></div>
-
-<!-- ============ DESKTOP: one-screen zoomable map ============ -->
 <section class="board" id="board">
   <div class="board__canvas" id="canvas">
-    <svg class="board__svg" viewBox="0 0 1600 900" aria-hidden="true">
+    <svg class="board__svg" id="roadSvg" aria-hidden="true">
       <defs>
-        <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%"   stop-color="#7c5cff"/>
-          <stop offset="32%"  stop-color="#0aa8d6"/>
-          <stop offset="58%"  stop-color="#f08a1e"/>
-          <stop offset="78%"  stop-color="#e8407a"/>
+        <linearGradient id="rg" x1="0" y1="0" x2="0.6" y2="1">
+          <stop offset="0%"   stop-color="#6d5ce0"/>
+          <stop offset="22%"  stop-color="#9b59ff"/>
+          <stop offset="42%"  stop-color="#0aa8d6"/>
+          <stop offset="62%"  stop-color="#e8407a"/>
+          <stop offset="80%"  stop-color="#f08a1e"/>
           <stop offset="100%" stop-color="#12a86a"/>
         </linearGradient>
       </defs>
@@ -59,19 +59,12 @@
       <path class="road-glow" id="roadGlow"></path>
       <path class="road-fill" id="roadFill"></path>
     </svg>
+    <div id="bands"></div>
     <div id="nodes"></div>
-  </div>
-
-  <div class="ov intro glass" id="intro">
-    <h1 class="grad-text" id="introTitle"></h1>
-    <p id="introSub"></p>
-    <div class="intro__stats" id="introStats"></div>
-    <div class="legend" id="legend"></div>
   </div>
 
   <div class="ov hint glass" id="hint"></div>
   <div class="ov updated glass" id="updated"></div>
-
   <div class="ov zoomctl glass">
     <button id="zOut" aria-label="Zoom out">−</button>
     <span id="zVal">100%</span>
@@ -81,37 +74,15 @@
   </div>
 </section>
 
-<!-- ============ DETAIL PANEL ============ -->
-<div class="scrim" id="scrim"></div>
 <aside class="panel" id="panel" role="dialog" aria-modal="false">
   <div class="panel__bar">
-    <button class="pill-btn" id="pPrev">‹</button>
-    <button class="pill-btn" id="pNext">›</button>
+    <button class="pill-btn" id="pPrev" aria-label="Previous">‹</button>
+    <button class="pill-btn" id="pNext" aria-label="Next">›</button>
     <span class="panel__count" id="pCount"></span>
-    <button class="pill-btn" id="pClose">✕</button>
+    <button class="pill-btn" id="pClose" aria-label="Close">✕</button>
   </div>
   <div class="panel__body" id="panelBody"></div>
 </aside>
-
-<!-- ============ MOBILE ============ -->
-<div class="mobile" id="mobile">
-  <div class="wrap hero">
-    <div class="hero__kicker glass" id="m-kicker"></div>
-    <h1><span id="m-l1"></span> <span class="grad-text" id="m-l2"></span></h1>
-    <p id="m-sub"></p>
-    <div class="hero__years"><b id="m-start">2022</b><span>———</span><b id="m-now"></b></div>
-    <div class="stats" id="m-stats"></div>
-  </div>
-  <div class="wrap tl" id="timeline"></div>
-  <div class="wrap outro">
-    <div class="outro__box glass">
-      <h2 class="grad-text" id="m-outroTitle"></h2>
-      <p id="m-outroBody"></p>
-      <div id="m-links"></div>
-    </div>
-  </div>
-  <div class="footer"><p id="m-footer"></p></div>
-</div>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <button class="lightbox__x" id="lbClose" aria-label="Close">✕</button>

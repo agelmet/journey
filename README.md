@@ -1,99 +1,105 @@
-# 🗺️ Journey — Angelo's Entrepreneurship Roadmap
+# The Journey Map — Angelo
 
-An interactive, bilingual (🇬🇷 Ελληνικά / 🇬🇧 English) roadmap of my journey — from affiliate marketing at 18 in 2022, through dropshipping, day trading and SMMA, to **Advon Media** today.
+An interactive, bilingual (🇬🇷 Ελληνικά / 🇬🇧 English) **map** of my journey: from A-Levels and mindset books in 2020, through affiliate pages, six e-commerce stores, an SMMA, a trading account that bled, and finally **Advon Media** — 200+ websites delivered.
 
 **Live site:** https://agelmet.github.io/journey/
 
 ---
 
-## ✨ What's in it
+## What it is
 
-**On desktop it's one screen — no scrolling.** The whole journey is a single map that fits the
-viewport; you zoom *into* a stop to read it in detail.
+It is not a scrolling timeline. It is **one map that fits your screen**, with **37 stops laid out in year bands** — 2020–21, 2022, 2023, 2024, 2025, 2026 and Next. The road draws itself up to where the journey is today; everything after is dashed.
 
-- **Fit-to-screen map** with a winding road that draws itself up to where the journey is today
-- **Click any stop → the map zooms to it** and a detail panel slides in with the full story
-- **Drag to pan · scroll to zoom · ← → to move between stops · Esc to zoom back out**
-- **▶ Tour** button that walks through every stage on its own
-- **Light theme by default**, dark theme one click away
-- **EL / EN toggle** — every single word switches instantly (remembers your choice)
-- Chapter legend doubles as a **filter** (dim everything except one chapter)
-- Per-stage **photo galleries** with a keyboard-friendly lightbox
-- **Win / Failure / Lesson / Live** tags, metric chips and a "lesson learned" quote per stage
-- On **mobile** the same content becomes a clean vertical timeline you scroll
+- **Click any stop → the map zooms into it** and a panel opens with the full story, the numbers, the photos and the lesson
+- **Drag to pan · scroll or pinch to zoom · `←` `→` to move between stops · `Esc` to zoom back out**
+- **▶** runs a guided tour through all 37 stops on its own
+- **Milestone stops** are drawn larger with a double ring (first $200, Rhodes, Advon born, the free offer, in-person era, trading, June-goal-hit-in-January, today)
+- Every stop carries a **"Meanwhile"** line — what I was doing in life at that moment (Year 12, KCL year 1 / 2 / 3, army)
+- **Light theme by default**, dark one click away · **ΕΛ / EN** switches every word instantly
+- The chapter legend (in the **i** panel) doubles as a filter
+- **Mobile is a map too** — two lanes, pannable, pinch-zoomable, with a bottom sheet for detail
 
 ---
 
-## ✍️ How to edit (the only file you need)
+## Editing it — one file
 
 Everything lives in **[`data/journey.js`](data/journey.js)**. No build step, no framework, no npm.
 
-### Change text
+### Change any text
 
 ```js
 title: { en: "English title", el: "Ελληνικός τίτλος" },
 ```
 
-Every text field is a `{ en, el }` pair. Change one, change both — that's it.
+Every text field is an `{ en, el }` pair.
 
-### Add a photo
+### Add a photo or a GIF
 
-1. Drop the image into the **`images/`** folder (e.g. `images/me-2022.jpg`)
-2. Add it to that stage's `images` array:
+1. Put the file in **`images/media/`** (naming them `YYYY-MM-DD_something.jpg` keeps them tidy)
+2. Add it to the `media` map at the top of the file with the next free number:
 
 ```js
-images: [
-  { src: "images/me-2022.jpg", caption: { en: "Me in 2022", el: "Εγώ το 2022" } }
-]
+media: { …, 112: "2026-08-20_new-photo.jpg" }
 ```
 
-You can add as many as you want per stage. Recommended size: **1200×900** or similar landscape.
+3. Reference it from any stop:
 
-### Add a whole new stage
+```js
+images: [ { n: 112, caption: { en: "What this shows", el: "Τι δείχνει" } } ]
+```
 
-Copy any `{ ... }` block inside `stages: [ ... ]` and change it. Fields:
+Videos should be converted to GIF first — they display inline and get a small `GIF` badge.
+
+### Add a new stop
+
+Copy any `{ … }` block inside `stages: [ … ]`:
 
 | Field | What it does |
 |---|---|
-| `id` | unique slug, e.g. `"new-venture"` |
+| `id` | unique slug |
+| `period` | one of the `periods` ids → which year band it lands in |
 | `chapter` | one of the `chapters` ids → sets the colour |
-| `icon` | any emoji, shown inside the map node |
-| `status` | `"win"` · `"fail"` · `"lesson"` · `"live"` · `"next"` |
-| `year` | short label under the node, e.g. `"2025"` |
-| `date` / `duration` | `{ en, el }` — exact dates go here |
-| `title` / `subtitle` / `body` | `{ en, el }` |
-| `metrics` | small stat chips — `{ label: {en,el}, value: "..." }` |
-| `lesson` | the italic takeaway quote |
+| `icon` | icon name (see `ICONS` in `assets/js/app.js`) — no emojis |
+| `status` | `win` · `fail` · `lesson` · `live` · `next` |
+| `milestone` | `true` draws it bigger with a double ring |
+| `date` | shown on the map under the stop |
+| `short` | the short label on the map |
+| `meanwhile` | the life-context line (school / uni / army) |
+| `title` `subtitle` `body` | the story |
+| `metrics` | the stat chips |
+| `lesson` | the italic takeaway |
 | `images` | the gallery |
 
-Stages appear in the order they're listed in the array.
+Stops appear in array order, and each year band fills left-to-right then right-to-left, so the road always flows.
 
-> ℹ️ Anything currently showing **TBD** is a placeholder waiting for the real dates / numbers.
+### Change the "updated" date
 
-### Add a new chapter (colour)
+One place, top of the file:
 
 ```js
-chapters: [
-  { id: "newthing", label: { en: "New Thing", el: "Κάτι Νέο" }, color: "#ff4fd8" }
-]
+lastUpdated: "15/08/2026",
 ```
 
 ---
 
-## 🧱 Structure
+## A note on dates
 
-```
-index.html            markup + SEO tags
-assets/css/style.css  all styling, themes, animations
-assets/js/app.js      rendering, road drawing, scroll, i18n, lightbox
-data/journey.js       👈 YOUR CONTENT
-images/               👈 YOUR PHOTOS
-```
-
-## ▶️ Run locally
-
-Just open `index.html` in a browser. (Or `python3 -m http.server` in this folder.)
+Dates were taken from each photo's EXIF capture date, falling back to the file's modification date, and cross-checked against what is visible inside the screenshots. A handful of files had been re-saved and lost their original timestamp — if a stop's date looks wrong, it is one line to fix in `data/journey.js`.
 
 ---
 
-Built with Claude · © Angelo — Advon Media
+## Structure
+
+```
+index.html            markup + SEO
+assets/css/style.css  styling, themes, map, animations
+assets/js/app.js      map layout, zoom/pan, icons, i18n, panel, lightbox
+data/journey.js       👈 ALL CONTENT
+images/media/         👈 ALL PHOTOS AND GIFS
+```
+
+Open `index.html` in a browser, or `python3 -m http.server` in this folder.
+
+---
+
+© Angelo — Advon Media
