@@ -26,13 +26,20 @@ window.JOURNEY = {
 
   /* ---- Year bands (each becomes a row on the desktop map) ---- */
   periods: [
-    { id: "p2021", label: "2020 – 21", note: { en: "School · mindset", el: "Σχολείο · νοοτροπία" } },
-    { id: "p2022", label: "2022",      note: { en: "First money online", el: "Πρώτα λεφτά online" } },
-    { id: "p2023", label: "2023",      note: { en: "Stores → agency", el: "Stores → agency" } },
-    { id: "p2024", label: "2024",      note: { en: "The grind", el: "Η κοπιαστική χρονιά" } },
-    { id: "p2025", label: "2025",      note: { en: "Reset & focus", el: "Reset & εστίαση" } },
-    { id: "p2026", label: "2026",      note: { en: "It works", el: "Δουλεύει" } },
-    { id: "pnext", label: "Next",      note: { en: "What's being built", el: "Τι χτίζεται" } }
+    { id: "p2021", label: "2020 – 21", note: { en: "School · mindset", el: "Σχολείο · νοοτροπία" },
+      life: { en: "SCHOOL — A-Levels", el: "ΣΧΟΛΕΙΟ — A-Levels" } },
+    { id: "p2022", label: "2022", note: { en: "First money online", el: "Πρώτα λεφτά online" },
+      life: { en: "UNIVERSITY — King's College London, Year 1", el: "ΠΑΝΕΠΙΣΤΗΜΙΟ — King's College London, 1ο έτος" } },
+    { id: "p2023", label: "2023", note: { en: "Stores → agency", el: "Stores → agency" },
+      life: { en: "UNIVERSITY — KCL, Year 1 → Year 2", el: "ΠΑΝΕΠΙΣΤΗΜΙΟ — KCL, 1ο → 2ο έτος" } },
+    { id: "p2024", label: "2024", note: { en: "The grind", el: "Η κοπιαστική χρονιά" },
+      life: { en: "UNIVERSITY — KCL, Year 2 → Year 3", el: "ΠΑΝΕΠΙΣΤΗΜΙΟ — KCL, 2ο → 3ο έτος" } },
+    { id: "p2025", label: "2025", note: { en: "Reset & focus", el: "Reset & εστίαση" },
+      life: { en: "GRADUATED (Jul) → ARMY (Nov)", el: "ΠΤΥΧΙΟ (Ιούλ) → ΣΤΡΑΤΟΣ (Νοέ)" } },
+    { id: "p2026", label: "2026", note: { en: "It works", el: "Δουλεύει" },
+      life: { en: "ARMY — last day 05/10/26 · discharged 04/11/26", el: "ΣΤΡΑΤΟΣ — τελευταία μέρα 05/10/26 · απόλυση 04/11/26" } },
+    { id: "pnext", label: "Next", note: { en: "What's being built", el: "Τι χτίζεται" },
+      life: { en: "FREE — full time on the business", el: "ΕΛΕΥΘΕΡΟΣ — full time στην επιχείρηση" } }
   ],
 
   chapters: [
@@ -905,12 +912,58 @@ window.JOURNEY = {
     images: []
   },
   {
+    id: "reviews-100", period: "p2026", chapter: "web", icon: "star", status: "win", milestone: true,
+    date: { en: "Jun 2026", el: "Ιουν 2026" },
+    short: { en: "100 five-star reviews", el: "100 πεντάστερες κριτικές" },
+    title: { en: "100 five-star Google reviews", el: "100 πεντάστερες κριτικές Google" },
+    subtitle: { en: "A hundred clients who went back and said it out loud", el: "Εκατό πελάτες που γύρισαν και το είπαν δημόσια" },
+    meanwhile: { en: "Still serving — last day scheduled 05/10/26, discharge 04/11/26", el: "Ακόμα στον στρατό — τελευταία μέρα 05/10/26, απόλυση 04/11/26" },
+    body: {
+      en: "In June 2026 Advon Media crossed 100 five-star reviews on Google, at a 5.0 rating with no exceptions. Reviews are the only thing in this business that cannot be bought, faked or cold called into existence — every one of them is a client who was happy enough to go back to their own Google account and write it down. This is the metric that turned cold calling from necessary into optional.",
+      el: "Τον Ιούνιο 2026 η Advon Media ξεπέρασε τις 100 πεντάστερες κριτικές στη Google, με βαθμολογία 5.0 χωρίς εξαιρέσεις. Οι κριτικές είναι το μόνο πράγμα σε αυτή τη δουλειά που δεν αγοράζεται, δεν στήνεται και δεν βγαίνει με cold call — κάθε μία είναι ένας πελάτης που ήταν αρκετά ευχαριστημένος ώστε να μπει στον δικό του λογαριασμό Google και να το γράψει. Αυτός είναι ο δείκτης που έκανε το cold calling από αναγκαίο, προαιρετικό."
+    },
+    metrics: [
+      { label: { en: "5★ reviews", el: "5★ κριτικές" }, value: "100+" },
+      { label: { en: "Rating", el: "Βαθμολογία" }, value: "5.0" },
+      { label: { en: "Below 5★", el: "Κάτω από 5★" }, value: "0" },
+      { label: { en: "Month", el: "Μήνας" }, value: { en: "Jun 2026", el: "Ιουν 2026" } }
+    ],
+    lesson: {
+      en: "Reviews are the only marketing asset that compounds while you sleep and cannot be bought.",
+      el: "Οι κριτικές είναι το μόνο marketing asset που ανατοκίζεται όσο κοιμάσαι και δεν αγοράζεται."
+    },
+    images: []
+  },
+  {
+    id: "clients-200", period: "p2026", chapter: "web", icon: "users", status: "win", milestone: true,
+    date: { en: "Jun 2026", el: "Ιουν 2026" },
+    short: { en: "200 subscribed clients", el: "200 συνδρομητές πελάτες" },
+    title: { en: "200 subscribed website clients", el: "200 πελάτες με συνδρομή website" },
+    subtitle: { en: "Recurring, not one-off — the number that changed the business model", el: "Επαναλαμβανόμενα, όχι μία φορά — ο αριθμός που άλλαξε το μοντέλο" },
+    meanwhile: { en: "Still serving — last day scheduled 05/10/26, discharge 04/11/26", el: "Ακόμα στον στρατό — τελευταία μέρα 05/10/26, απόλυση 04/11/26" },
+    body: {
+      en: "The same month, the client base crossed 200 subscribed websites. Every failed venture before this one had the same defect: nobody came back. The card skins, the puffer cases, the NFC stands — all one-off purchases. A subscribed website client is the opposite: they stay, they renew, and the base only grows. Two hundred of them is the difference between having a job and owning an asset.",
+      el: "Τον ίδιο μήνα, η πελατειακή βάση ξεπέρασε τα 200 websites με συνδρομή. Κάθε αποτυχημένο εγχείρημα πριν από αυτό είχε το ίδιο ελάττωμα: κανείς δεν ξαναγύριζε. Τα αυτοκόλλητα καρτών, οι puffer θήκες, τα NFC σταντ — όλα αγορές μιας φοράς. Ένας πελάτης website με συνδρομή είναι το ακριβώς αντίθετο: μένει, ανανεώνει, και η βάση μόνο μεγαλώνει. Διακόσιοι τέτοιοι είναι η διαφορά ανάμεσα στο να έχεις δουλειά και στο να έχεις περιουσιακό στοιχείο."
+    },
+    metrics: [
+      { label: { en: "Subscribed clients", el: "Πελάτες με συνδρομή" }, value: "200+" },
+      { label: { en: "Model", el: "Μοντέλο" }, value: { en: "Recurring", el: "Επαναλαμβανόμενο" } },
+      { label: { en: "Hosting from", el: "Hosting από" }, value: { en: "€10.83/mo", el: "10,83€/μήνα" } },
+      { label: { en: "Month", el: "Μήνας" }, value: { en: "Jun 2026", el: "Ιουν 2026" } }
+    ],
+    lesson: {
+      en: "Six ventures failed because nobody came back. This one works because everybody does.",
+      el: "Έξι εγχειρήματα απέτυχαν επειδή κανείς δεν ξαναγύριζε. Αυτό δουλεύει επειδή γυρίζουν όλοι."
+    },
+    images: []
+  },
+  {
     id: "today", period: "p2026", chapter: "web", icon: "pin2", status: "live", milestone: true,
     date: { en: "Jul – 15 Aug 2026 · present", el: "Ιουλ – 15 Αυγ 2026 · σήμερα" },
     short: { en: "Referrals only", el: "Μόνο συστάσεις" },
     title: { en: "Today: cold calling stopped, referrals only", el: "Σήμερα: τα cold calls σταμάτησαν, μόνο συστάσεις" },
     subtitle: { en: "Clearing the backlog — and it is not cleared yet", el: "Ξεκαθαρίζοντας τη στοίβα — και δεν έχει τελειώσει ακόμα" },
-    meanwhile: { en: "15 August 2026 — this is where the map ends, for now", el: "15 Αυγούστου 2026 — εδώ τελειώνει ο χάρτης, προς το παρόν" },
+    meanwhile: { en: "Army: last day 05/10/26, officially discharged 04/11/26 — then full time", el: "Στρατός: τελευταία μέρα 05/10/26, επίσημη απόλυση 04/11/26 — μετά full time" },
     body: {
       en: "In July 2026 I stopped cold calling entirely. Since then the work has come purely from referrals, and the focus has been on finishing every job already in the pipeline. As of 15 August 2026 that is still not done. Advon Media today: 200+ websites delivered, 110+ five-star Google reviews, a 5.0 rating, websites built with no upfront payment, first sample in 7–14 days, unlimited revisions, hosting from €10.83/month, and ten service lines around the core — Google Business and Maps with NFC review stands, online booking with automated reminders, a bilingual AI website assistant, direct booking for tourism synced with Booking, Airbnb and Expedia, digital QR menus, cost calculators, custom small software, wedding and christening sites and social media management.",
       el: "Τον Ιούλιο 2026 σταμάτησα τελείως τα cold calls. Από τότε η δουλειά έρχεται καθαρά από συστάσεις, και η εστίαση είναι να τελειώσουν όλα τα έργα που είναι ήδη στη σειρά. Στις 15 Αυγούστου 2026 αυτό δεν έχει ολοκληρωθεί ακόμα. Η Advon Media σήμερα: 200+ websites παραδομένα, 110+ πεντάστερες κριτικές Google, βαθμολογία 5.0, κατασκευή χωρίς προκαταβολή, πρώτο δείγμα σε 7–14 ημέρες, απεριόριστες διορθώσεις, hosting από 10,83€/μήνα, και δέκα υπηρεσίες γύρω από τον πυρήνα — Google Business & Maps με NFC σταντ κριτικών, online ραντεβού με αυτόματες υπενθυμίσεις, δίγλωσσος AI βοηθός ιστοσελίδας, direct booking για τουρισμό συγχρονισμένο με Booking, Airbnb και Expedia, ψηφιακά QR menu, υπολογιστές κόστους, custom μικρά software, sites γάμου και βάπτισης, και διαχείριση social media."
