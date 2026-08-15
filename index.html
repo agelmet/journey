@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="el" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Angelo — Journey / Το Ταξίδι</title>
+<meta name="description" content="From affiliate marketing at 18 to Advon Media — an interactive bilingual roadmap of every venture, win and failure. / Από το affiliate marketing στα 18 μέχρι την Advon Media.">
+<meta name="theme-color" content="#05060d">
+<meta property="og:title" content="Angelo — Journey in Entrepreneurship">
+<meta property="og:description" content="2022 → 2026. Affiliate, dropshipping, trading, SMMA, and Advon Media. An interactive roadmap.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- background -->
+<div class="bg" aria-hidden="true">
+  <div class="bg__grid"></div>
+  <div class="blob blob--1"></div>
+  <div class="blob blob--2"></div>
+  <div class="blob blob--3"></div>
+  <div class="bg__noise"></div>
+</div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- scroll progress -->
+<div class="topbar" aria-hidden="true"><div class="topbar__fill" id="topFill"></div></div>
+
+<!-- header -->
+<header class="header">
+  <div class="header__inner glass">
+    <div class="brand">
+      <span class="brand__dot"></span>
+      ANGELO <span id="brand-role" style="color:var(--dim);font-weight:600;font-size:12.5px"></span>
+    </div>
+    <div class="header__spacer"></div>
+    <div class="hdr-progress">
+      <div class="hdr-progress__track"><div class="hdr-progress__fill" id="hdrFill"></div></div>
+      <span id="hdrPct">0%</span>
+    </div>
+    <button class="pill-btn" id="themeBtn" title="Theme" aria-label="Toggle theme">☾</button>
+    <div class="lang" data-active="el">
+      <span class="lang__thumb"></span>
+      <button data-lang="el" aria-pressed="true">ΕΛ</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<!-- hero -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__kicker glass"><span id="kicker-text"></span></div>
+    <h1>
+      <span id="hero-l1" class="d-block"></span>
+      <span id="hero-l2" class="grad-text"></span>
+    </h1>
+    <p class="hero__sub" id="hero-sub"></p>
+    <div class="hero__years">
+      <b id="hero-start">2022</b><span>———</span><b id="hero-now"></b>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="scrollcue">
+      <span id="scroll-text"></span>
+      <span class="scrollcue__line"></span>
+    </div>
+  </div>
+</section>
+
+<!-- map -->
+<main>
+  <section class="wrap">
+    <div class="section-head rv">
+      <h2 id="map-title" class="grad-text"></h2>
+      <p id="map-sub"></p>
+    </div>
+    <div class="filters rv" id="filters"></div>
+
+    <div class="road" id="road">
+      <svg class="road__svg" id="roadSvg" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#7c5cff"/>
+            <stop offset="35%"  stop-color="#00d4ff"/>
+            <stop offset="70%"  stop-color="#ff9f45"/>
+            <stop offset="100%" stop-color="#2bd98b"/>
+          </linearGradient>
+        </defs>
+        <path class="road__base" id="roadBase"></path>
+        <path class="road__glow" id="roadGlow"></path>
+        <path class="road__fill" id="roadFill"></path>
+        <g class="road__rider" id="rider">
+          <circle r="9" fill="#fff" opacity=".18"></circle>
+          <circle r="5" fill="#fff"></circle>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- outro -->
+  <section class="wrap outro">
+    <div class="outro__box glass rv">
+      <h2 id="outro-title" class="grad-text"></h2>
+      <p id="outro-body"></p>
+      <div class="btns" id="outro-links"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© <span id="yr"></span> Angelo · Advon Media</p>
+</footer>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox__x" id="lbClose" aria-label="Close">✕</button>
+  <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" aria-label="Previous">‹</button>
+  <button class="lightbox__nav lightbox__nav--next" id="lbNext" aria-label="Next">›</button>
+  <div>
+    <img id="lbImg" alt="">
+    <p class="lightbox__cap" id="lbCap"></p>
+  </div>
+</div>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script src="data/journey.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
