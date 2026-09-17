@@ -159,6 +159,29 @@ window.JOURNEY = {
 
   /* ========================== 2022 =========================== */
   {
+    id: "acnecareshop", period: "p2022", chapter: "ecommerce", icon: "cart", status: "fail", milestone: true,
+    date: { en: "Summer 2022", el: "Καλοκαίρι 2022" },
+    short: { en: "AcneCareShop — first store", el: "AcneCareShop — πρώτο store" },
+    title: { en: "AcneCareShop — the very first store", el: "AcneCareShop — το πρώτο store απ' όλα" },
+    subtitle: { en: "A nose-acne product, built with Dimos · one sale out of nowhere", el: "Ένα προϊόν για ακμή στη μύτη, μαζί με τον Δήμο · μία πώληση από το πουθενά" },
+    meanwhile: { en: "18 years old, on holiday in Paros when the sale came in", el: "18 χρονών, διακοπές στην Πάρο όταν ήρθε η πώληση" },
+    body: {
+      en: "The first store I ever built was AcneCareShop — a product for acne on the nose, run together with Dimos. While I was on holiday in Paros, a sale came in completely out of the blue. We never found out where that customer came from, and the product was never delivered. We also tried to bring in Evelina, a TikTok creator from Erythraia: we met her in person in Athens and she agreed to work with us on a commission basis. She made one video, it got no real traction, and it never went further.",
+      el: "Το πρώτο store που έφτιαξα ποτέ ήταν το AcneCareShop — ένα προϊόν για την ακμή στη μύτη, μαζί με τον Δήμο. Ενώ ήμουν διακοπές στην Πάρο, ήρθε μια πώληση εντελώς από το πουθενά. Δεν μάθαμε ποτέ από πού ήρθε εκείνος ο πελάτης, και το προϊόν δεν παραδόθηκε ποτέ. Προσπαθήσαμε επίσης να συνεργαστούμε με την Εβελίνα, TikToker από την Ερυθραία: τη συναντήσαμε από κοντά στην Αθήνα και συμφώνησε να δουλέψουμε με ποσοστό (commission). Έκανε ένα βίντεο, δεν είχε πραγματική απήχηση, και δεν προχώρησε παραπέρα."
+    },
+    metrics: [
+      { label: { en: "Built with", el: "Μαζί με" }, value: { en: "Dimos", el: "Δήμο" } },
+      { label: { en: "Sales", el: "Πωλήσεις" }, value: "1" },
+      { label: { en: "Delivered", el: "Παραδόθηκε" }, value: { en: "No", el: "Όχι" } },
+      { label: { en: "Influencer videos", el: "Βίντεο influencer" }, value: "1" }
+    ],
+    lesson: {
+      en: "A sale you can't explain is luck, not a business. And a sale you can't deliver isn't a win — the back end matters as much as the front.",
+      el: "Μια πώληση που δεν μπορείς να εξηγήσεις είναι τύχη, όχι επιχείρηση. Και μια πώληση που δεν παραδίδεις δεν είναι νίκη — το «πίσω μέρος» μετράει όσο και η βιτρίνα."
+    },
+    images: []
+  },
+  {
     id: "first-200", period: "p2022", chapter: "affiliate", icon: "star", status: "win", milestone: true,
     date: { en: "Summer 2022", el: "Καλοκαίρι 2022" },
     short: { en: "First $200 online", el: "Πρώτα $200 online" },
@@ -218,8 +241,8 @@ window.JOURNEY = {
     subtitle: { en: "@homecinema.co · ukhomecinema.com · 1,222 followers, zero sales", el: "@homecinema.co · ukhomecinema.com · 1.222 followers, μηδέν πωλήσεις" },
     meanwhile: { en: "First weeks at King's College London", el: "Πρώτες εβδομάδες στο King's College London" },
     body: {
-      en: "The first real store: a mini projector, a brand called HomeCinemaCo, its own website at ukhomecinema.com and a TikTok account started on 23 September 2022. I filmed the projector everywhere — in a red room, under blue light, even in the aisle of a plane — with hooks like 'No TV in your room?'. The bio promised a giveaway at 2K followers and 50% off. The account grew to 1,222 followers and videos reached up to 656 views, but not a single projector sold.",
-      el: "Το πρώτο πραγματικό store: ένας mini projector, ένα brand με το όνομα HomeCinemaCo, δικό του site στο ukhomecinema.com και λογαριασμός TikTok από τις 23 Σεπτεμβρίου 2022. Γύριζα τον projector παντού — σε κόκκινο δωμάτιο, κάτω από μπλε φως, ακόμα και στον διάδρομο ενός αεροπλάνου — με hooks όπως «Δεν έχεις τηλεόραση στο δωμάτιο;». Το bio υποσχόταν giveaway στους 2K followers και 50% έκπτωση. Ο λογαριασμός έφτασε τους 1.222 followers και τα βίντεο ως τα 656 views, αλλά δεν πουλήθηκε ούτε ένας projector."
+      en: "The next store: a mini projector, a brand called HomeCinemaCo, its own website at ukhomecinema.com and a TikTok account started on 23 September 2022. I filmed the projector everywhere — in a red room, under blue light, even in the aisle of a plane — with hooks like 'No TV in your room?'. The bio promised a giveaway at 2K followers and 50% off. The account grew to 1,222 followers and videos reached up to 656 views, but not a single projector sold.",
+      el: "Το επόμενο store: ένας mini projector, ένα brand με το όνομα HomeCinemaCo, δικό του site στο ukhomecinema.com και λογαριασμός TikTok από τις 23 Σεπτεμβρίου 2022. Γύριζα τον projector παντού — σε κόκκινο δωμάτιο, κάτω από μπλε φως, ακόμα και στον διάδρομο ενός αεροπλάνου — με hooks όπως «Δεν έχεις τηλεόραση στο δωμάτιο;». Το bio υποσχόταν giveaway στους 2K followers και 50% έκπτωση. Ο λογαριασμός έφτασε τους 1.222 followers και τα βίντεο ως τα 656 views, αλλά δεν πουλήθηκε ούτε ένας projector."
     },
     metrics: [
       { label: { en: "Started", el: "Ξεκίνησε" }, value: "23/09/2022" },

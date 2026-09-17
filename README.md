@@ -8,7 +8,7 @@ An interactive, bilingual (🇬🇷 Ελληνικά / 🇬🇧 English) **map**
 
 ## What it is
 
-It is not a scrolling timeline. It is **one map that fits your screen**, with **43 stops laid out in year bands** — 2020–21, 2022, 2023, 2024, 2025, 2026 and Next. The road draws itself up to where the journey is today; everything after is dashed.
+It is not a scrolling timeline. It is **one map that fits your screen**, with **44 stops laid out in year bands** — 2020–21, 2022, 2023, 2024, 2025, 2026 and Next. The road draws itself up to where the journey is today; everything after is dashed.
 
 - **Click any stop → the map zooms into it** and a panel opens with the full story, the numbers, the photos and the lesson
 - **Smooth inertial zoom & pan** — drag (with momentum) · scroll, pinch, `+` / `−` or double-click to zoom · `←` `→` between stops · `Esc` or `0` to zoom back out
@@ -16,7 +16,7 @@ It is not a scrolling timeline. It is **one map that fits your screen**, with **
 - Each year band shows the **life stage** (school / KCL year 1-2-3 / army) and its **milestones** listed underneath
 - **Privacy toggle (eye icon)** — blurs every amount above €2,500 everywhere, on the map and in the panel
 - **Summary (list icon)** — the whole six years condensed to one screen, every line clickable
-- **▶** runs a guided tour through all 43 stops on its own
+- **▶** runs a guided tour through all 44 stops on its own
 - **Milestone stops** are drawn larger with a double ring (first $200, Rhodes, Advon born, the free offer, in-person era, trading, June-goal-hit-in-January, today)
 - Every stop carries a **"Meanwhile"** line — what I was doing in life at that moment (Year 12, KCL year 1 / 2 / 3, army)
 - **Light theme by default**, dark one click away · **ΕΛ / EN** switches every word instantly
