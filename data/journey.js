@@ -19,7 +19,7 @@ window.JOURNEY = {
       el: "A-Levels και βιβλία νοοτροπίας στα 18. Affiliate σελίδες, τέσσερα νεκρά stores, ένας λογαριασμός trading που μάτωσε, ένα agency που τελικά δούλεψε. 200+ websites μετά, αυτός είναι όλος ο χάρτης — χωρίς περικοπές."
     },
     startYear: 2022,
-    lastUpdated: "15/08/2026",
+    lastUpdated: "17/09/2026",
     currentLabel: { en: "15 Aug 2026 — you are here", el: "15 Αυγ 2026 — εδώ είμαστε" },
     links: [{ label: "advonmedia.com", url: "https://advonmedia.com" }]
   },
@@ -101,7 +101,10 @@ window.JOURNEY = {
     102:"2025-10-30_IMG_9800.jpg", 103:"2025-10-30_IMG_9807.jpg", 104:"2025-10-30_IMG_9808.jpg",
     105:"2025-10-31_IMG_9832.jpg", 106:"2026-02-08_IMG_1687.jpg", 107:"2026-02-15_IMG_1914.jpg",
     108:"2026-03-05_IMG_2263.jpg", 109:"2026-03-22_IMG_2562.jpg", 110:"2026-03-22_IMG_2563.jpg",
-    111:"2026-04-02_IMG_2762.jpg"
+    111:"2026-04-02_IMG_2762.jpg",
+    112:"2022-09-23_homecinema-tiktok.jpg", 113:"2022-08-28_millionaires-hub-tiktok.jpg",
+    114:"2022-11-22_ultrasound-cleaner-tiktok.jpg", 115:"2022-12-05_wearable-charger-tiktok.jpg",
+    116:"2022-12-05_start-dates-notes.jpg"
   },
 
   stages: [
@@ -182,6 +185,57 @@ window.JOURNEY = {
     ]
   },
   {
+    id: "millionaires-hub", period: "p2022", chapter: "affiliate", icon: "trophy", status: "fail",
+    date: { en: "28 Aug 2022", el: "28 Αυγ 2022" },
+    short: { en: "Future Millionaires", el: "Future Millionaires" },
+    title: { en: "Future Millionaires — a second affiliate page", el: "Future Millionaires — δεύτερη affiliate σελίδα" },
+    subtitle: { en: "@millionaires_hub_ · money & motivation clips · link in Insta's bio", el: "@millionaires_hub_ · clips για χρήμα & κίνητρο · link στο bio του Insta" },
+    meanwhile: { en: "18 years old, last weeks of summer before King's College London", el: "18 χρονών, τελευταίες εβδομάδες του καλοκαιριού πριν το King's College London" },
+    body: {
+      en: "After @weight_losers_ made the first $200, I opened a second affiliate account on 28 August 2022 — this time in the 'make money from home' niche. Future Millionaires (@millionaires_hub_) posted luxury, success and motivation clips, with the bio pointing to the link in the Instagram bio. It never took off: 10 followers, 258 likes, single-digit views on most videos, and no sales.",
+      el: "Αφού το @weight_losers_ έβγαλε τα πρώτα $200, στις 28 Αυγούστου 2022 άνοιξα δεύτερο affiliate λογαριασμό — αυτή τη φορά στη θεματική «βγάλε λεφτά από το σπίτι». Το Future Millionaires (@millionaires_hub_) ανέβαζε clips για πολυτέλεια, επιτυχία και κίνητρο, με το bio να παραπέμπει στο link του Instagram. Δεν απογειώθηκε ποτέ: 10 followers, 258 likes, μονοψήφια views στα περισσότερα βίντεο, και καμία πώληση."
+    },
+    metrics: [
+      { label: { en: "Started", el: "Ξεκίνησε" }, value: "28/08/2022" },
+      { label: { en: "Followers", el: "Followers" }, value: "10" },
+      { label: { en: "Likes", el: "Likes" }, value: "258" },
+      { label: { en: "Sales", el: "Πωλήσεις" }, value: "0" }
+    ],
+    lesson: {
+      en: "Copying a niche that worked for someone else isn't a strategy. The first win came from a page with a clear audience — this one never had one.",
+      el: "Το να αντιγράφεις μια θεματική που δούλεψε σε άλλον δεν είναι στρατηγική. Η πρώτη επιτυχία ήρθε από σελίδα με ξεκάθαρο κοινό — αυτή δεν είχε ποτέ."
+    },
+    images: [
+      { n: 113, caption: { en: "@millionaires_hub_ on TikTok — 10 followers, 258 likes", el: "@millionaires_hub_ στο TikTok — 10 followers, 258 likes" } },
+      { n: 116, caption: { en: "My own notes of when each venture started", el: "Οι σημειώσεις μου για το πότε ξεκίνησε το κάθε εγχείρημα" } }
+    ]
+  },
+  {
+    id: "home-cinema", period: "p2022", chapter: "ecommerce", icon: "film", status: "fail",
+    date: { en: "23 Sep 2022", el: "23 Σεπ 2022" },
+    short: { en: "HomeCinemaCo projector", el: "HomeCinemaCo projector" },
+    title: { en: "HomeCinemaCo — the mini projector store", el: "HomeCinemaCo — το store με τον mini projector" },
+    subtitle: { en: "@homecinema.co · ukhomecinema.com · 1,222 followers, zero sales", el: "@homecinema.co · ukhomecinema.com · 1.222 followers, μηδέν πωλήσεις" },
+    meanwhile: { en: "First weeks at King's College London", el: "Πρώτες εβδομάδες στο King's College London" },
+    body: {
+      en: "The first real store: a mini projector, a brand called HomeCinemaCo, its own website at ukhomecinema.com and a TikTok account started on 23 September 2022. I filmed the projector everywhere — in a red room, under blue light, even in the aisle of a plane — with hooks like 'No TV in your room?'. The bio promised a giveaway at 2K followers and 50% off. The account grew to 1,222 followers and videos reached up to 656 views, but not a single projector sold.",
+      el: "Το πρώτο πραγματικό store: ένας mini projector, ένα brand με το όνομα HomeCinemaCo, δικό του site στο ukhomecinema.com και λογαριασμός TikTok από τις 23 Σεπτεμβρίου 2022. Γύριζα τον projector παντού — σε κόκκινο δωμάτιο, κάτω από μπλε φως, ακόμα και στον διάδρομο ενός αεροπλάνου — με hooks όπως «Δεν έχεις τηλεόραση στο δωμάτιο;». Το bio υποσχόταν giveaway στους 2K followers και 50% έκπτωση. Ο λογαριασμός έφτασε τους 1.222 followers και τα βίντεο ως τα 656 views, αλλά δεν πουλήθηκε ούτε ένας projector."
+    },
+    metrics: [
+      { label: { en: "Started", el: "Ξεκίνησε" }, value: "23/09/2022" },
+      { label: { en: "Followers", el: "Followers" }, value: "1,222" },
+      { label: { en: "Top video", el: "Κορυφαίο βίντεο" }, value: "656" },
+      { label: { en: "Sales", el: "Πωλήσεις" }, value: "0" }
+    ],
+    lesson: {
+      en: "Followers are not customers. A giveaway brings people who want something free, not people who want to pay.",
+      el: "Οι followers δεν είναι πελάτες. Ένα giveaway φέρνει ανθρώπους που θέλουν κάτι δωρεάν, όχι ανθρώπους που θέλουν να πληρώσουν."
+    },
+    images: [
+      { n: 112, caption: { en: "@homecinema.co — 1,222 followers, filmed even on a plane", el: "@homecinema.co — 1.222 followers, γυρίσματα ακόμα και σε αεροπλάνο" } }
+    ]
+  },
+  {
     id: "four-accounts", period: "p2022", chapter: "affiliate", icon: "grid", status: "lesson",
     date: { en: "17–18 Nov 2022", el: "17–18 Νοε 2022" },
     short: { en: "Four accounts, four bets", el: "Τέσσερις λογαριασμοί" },
@@ -205,6 +259,56 @@ window.JOURNEY = {
       { n: 6, caption: { en: "The account switcher, 18 Nov 2022", el: "Ο switcher λογαριασμών, 18 Νοε 2022" } },
       { n: 5, caption: { en: "The ultrasonic cleaner being filmed for @ultrasound_tub", el: "Το ultrasonic cleaner σε λήψη για το @ultrasound_tub" } },
       { n: 12, caption: { en: "INSTAGRBOOST™ brand", el: "Το brand INSTAGRBOOST™" } }
+    ]
+  },
+  {
+    id: "ultrasound-tub", period: "p2022", chapter: "ecommerce", icon: "spark", status: "fail",
+    date: { en: "22 Nov 2022", el: "22 Νοε 2022" },
+    short: { en: "UltrasoundTub", el: "UltrasoundTub" },
+    title: { en: "UltrasoundTub™ — the ultrasonic cleaner", el: "UltrasoundTub™ — το ultrasonic cleaner" },
+    subtitle: { en: "@ultrasoundcleaner · jewellery & razors · store link in Insta's bio", el: "@ultrasoundcleaner · κοσμήματα & ξυραφάκια · link του store στο bio του Insta" },
+    meanwhile: { en: "First year at King's College London", el: "Πρώτο έτος στο King's College London" },
+    body: {
+      en: "Started on 22 November 2022, in my first year at university. A small ultrasonic cleaning tub, branded UltrasoundTub™, pitched for jewellery and razors: 'Introducing the Ultimate Ultrasound Cleaner!', 'Tired of having to clean your razor every time you use it?'. The videos did better than the account — the pinned one passed 1,400 views and two more crossed 1,000 — but the page stayed at 6 followers and the store made no sales.",
+      el: "Ξεκίνησε στις 22 Νοεμβρίου 2022, στο πρώτο έτος του πανεπιστημίου. Ένα μικρό ultrasonic καθαριστικό, με το brand UltrasoundTub™, για κοσμήματα και ξυραφάκια: «Introducing the Ultimate Ultrasound Cleaner!», «Κουράστηκες να καθαρίζεις το ξυραφάκι σου κάθε φορά;». Τα βίντεο πήγαν καλύτερα από τον λογαριασμό — το pinned ξεπέρασε τα 1.400 views και άλλα δύο πέρασαν τα 1.000 — αλλά η σελίδα έμεινε στους 6 followers και το store δεν έκανε καμία πώληση."
+    },
+    metrics: [
+      { label: { en: "Started", el: "Ξεκίνησε" }, value: "22/11/2022" },
+      { label: { en: "Top video", el: "Κορυφαίο βίντεο" }, value: "1,446" },
+      { label: { en: "Followers", el: "Followers" }, value: "6" },
+      { label: { en: "Sales", el: "Πωλήσεις" }, value: "0" }
+    ],
+    lesson: {
+      en: "Views without a reason to buy right now are just views. A product demo needs a trusted place to click through to.",
+      el: "Τα views χωρίς λόγο να αγοράσει κάποιος τώρα είναι απλώς views. Ένα demo προϊόντος χρειάζεται ένα αξιόπιστο μέρος για να καταλήξει ο πελάτης."
+    },
+    images: [
+      { n: 114, caption: { en: "@ultrasoundcleaner — videos up to 1,446 views", el: "@ultrasoundcleaner — βίντεο έως 1.446 views" } }
+    ]
+  },
+  {
+    id: "wearable-charger", period: "p2022", chapter: "ecommerce", icon: "battery", status: "fail",
+    date: { en: "5 Dec 2022", el: "5 Δεκ 2022" },
+    short: { en: "Wearable Charger 2.0", el: "Wearable Charger 2.0" },
+    title: { en: "Wearable Charger 2.0 — the bracelet cable", el: "Wearable Charger 2.0 — το βραχιόλι-καλώδιο" },
+    subtitle: { en: "@wearable_charger · a charging cable you wear on your wrist", el: "@wearable_charger · ένα καλώδιο φόρτισης που φοράς στον καρπό" },
+    meanwhile: { en: "First year at King's College London", el: "Πρώτο έτος στο King's College London" },
+    body: {
+      en: "Two weeks after the cleaner, on 5 December 2022, the next product: a leather bracelet that doubles as a phone charging cable. Wearable Charger™ had its own store page, and the TikToks showed it in the hand, on the wrist, plugged into a phone by the bed — 'Level up your outfit!'. Videos sat around 240–340 views, the account had 2 followers, and it made no sales.",
+      el: "Δύο εβδομάδες μετά το cleaner, στις 5 Δεκεμβρίου 2022, το επόμενο προϊόν: ένα δερμάτινο βραχιόλι που είναι ταυτόχρονα καλώδιο φόρτισης κινητού. Το Wearable Charger™ είχε δική του σελίδα στο store, και τα TikTok το έδειχναν στο χέρι, στον καρπό, στην πρίζα δίπλα στο κρεβάτι — «Level up your outfit!». Τα βίντεο έμειναν γύρω στα 240–340 views, ο λογαριασμός είχε 2 followers, και δεν έγινε καμία πώληση."
+    },
+    metrics: [
+      { label: { en: "Started", el: "Ξεκίνησε" }, value: "05/12/2022" },
+      { label: { en: "Top video", el: "Κορυφαίο βίντεο" }, value: "343" },
+      { label: { en: "Followers", el: "Followers" }, value: "2" },
+      { label: { en: "Sales", el: "Πωλήσεις" }, value: "0" }
+    ],
+    lesson: {
+      en: "Four products in fourteen weeks. Switching product every time it goes quiet means none of them ever gets a real chance.",
+      el: "Τέσσερα προϊόντα σε δεκατέσσερις εβδομάδες. Αν αλλάζεις προϊόν κάθε φορά που πέφτει η κίνηση, κανένα δεν παίρνει ποτέ πραγματική ευκαιρία."
+    },
+    images: [
+      { n: 115, caption: { en: "@wearable_charger — the bracelet charger on TikTok", el: "@wearable_charger — το βραχιόλι-φορτιστής στο TikTok" } }
     ]
   },
   {
